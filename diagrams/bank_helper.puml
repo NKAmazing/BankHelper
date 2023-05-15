@@ -1,0 +1,50 @@
+@startuml bank_helper
+
+'''Class diagram of a Bank Assistant that use a server-client architecture'''
+
+class User {
+    - username = string
+    - address = string
+    - phone = string
+    - email = string
+    - password = string
+    - account = Account
+    + log_in()
+    + log_out()
+    + create_account()
+    + delete_account()
+    + update_account()
+    + get_account()
+    + start_chat()
+}
+
+class Account {
+    - account_number = string
+    - balance = float
+    - transactions = list
+    + deposit()
+    + withdraw()
+    + transfer()
+    + get_balance()
+    + get_transactions()
+}
+
+class Transaction {
+    - transaction_id = string
+    - transaction_type = string
+    - transaction_amount = float
+    - transaction_date = date
+    - transaction_time = time
+    - transaction_status = string
+    + get_transaction_id()
+    + get_transaction_type()
+    + get_transaction_amount()
+    + get_transaction_date()
+    + get_transaction_time()
+    + get_transaction_status()
+}
+
+User --r--> Account
+Account -d-> Transaction
+
+@enduml
