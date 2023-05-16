@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'server.apps.ServerConfig',
     'bank.apps.BankConfig',
     'channels',
+    'channels_redis',
+    'websockets',
 ]
 
 MIDDLEWARE = [
@@ -59,7 +61,7 @@ ROOT_URLCONF = 'bank_helper.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, '/bank/templates/bank')],
+        'DIRS': [os.path.join(BASE_DIR, 'client', 'templates', 'client')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -127,7 +129,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/static/client/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'client', 'static')
+]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
