@@ -5,46 +5,73 @@
 class User {
     - username = string
     - address = string
-    - phone = string
+    - phone = int
     - email = string
     - password = string
     - account = Account
     + log_in()
     + log_out()
+    + register()
+    + start_chat()
+    + send_message()
+}
+
+class Message {
+    - id = string
+    - content = string
+    - date = datetime
+    - username = User
+    - chat = Chat
+}
+
+class Chat {
+    - id = string
+    - chatname = string
+    - date = datetime
+    + receive_message()
+    + connect_to_bank()
+
+}
+
+class Bank {
+    - id = string
+    - bank_name = string
+    - bank_email = string
+    - bank_account = Account[]
+    + get_request()
     + create_account()
     + delete_account()
     + update_account()
-    + get_account()
-    + start_chat()
+    + select_account()
 }
 
 class Account {
+    - id = string
     - account_number = string
     - balance = float
-    - transactions = list
+    - transactions = Transaction[]
     + deposit()
     + withdraw()
     + transfer()
     + get_balance()
-    + get_transactions()
+    + create_transaction()
+    + cancel_transaction()
 }
 
 class Transaction {
-    - transaction_id = string
-    - transaction_type = string
-    - transaction_amount = float
-    - transaction_date = date
-    - transaction_time = time
-    - transaction_status = string
-    + get_transaction_id()
-    + get_transaction_type()
-    + get_transaction_amount()
-    + get_transaction_date()
-    + get_transaction_time()
-    + get_transaction_status()
+    - id = string
+    - amount = float
+    - date = datetime
+    - status = string
+    - source_account = Account
+    - destination_account = Account
 }
 
-User --r--> Account
-Account -d-> Transaction
+User -d-> Message
+User -r-> Chat
+Chat -d-> Message
+Chat -r-> Bank
+Bank -d-> Account
+Account -r-> Transaction
 
 @enduml
