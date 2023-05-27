@@ -3,14 +3,22 @@ from django.conf import settings
 
 # Create your models here.
 
+class Bank(models.Model):
+    id = models.AutoField(primary_key=True) 
+    bank_name = models.CharField(max_length=100)
+    bank_email = models.EmailField(max_length=100)
+    bank_accounts = models.ManyToManyField('Account', blank=True)
+
 class Transaction(models.Model):
-    transaction_id = models.CharField(max_length=100)
-    transaction_type = models.CharField(max_length=100)
-    transaction_amount = models.FloatField()
-    transaction_date = models.DateTimeField(auto_now_add=True)
-    transaction_status = models.CharField(max_length=100)
+    id = models.CharField(max_length=100)
+    amount = models.FloatField()
+    date = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=100)
+    source_account = models.ForeignKey('Account', on_delete=models.CASCADE, related_name='source_account')
+    destination_account = models.ForeignKey('Account', on_delete=models.CASCADE, related_name='destination_account')
 
 class Account(models.Model):
+    id = models.AutoField(primary_key=True)
     account_number = models.CharField(max_length=100)
     balance = models.FloatField()
     transactions = models.ManyToManyField(Transaction)

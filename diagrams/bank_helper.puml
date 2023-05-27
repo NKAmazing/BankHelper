@@ -3,6 +3,7 @@
 '''Class diagram of a Bank Assistant that use a server-client architecture'''
 
 class User {
+    - id = string
     - username = string
     - address = string
     - phone = int
@@ -20,14 +21,15 @@ class Message {
     - id = string
     - content = string
     - date = datetime
-    - username = User
+    - user = User
     - chat = Chat
 }
 
 class Chat {
     - id = string
-    - chatname = string
+    - chat_name = string
     - date = datetime
+    - messages = Message[]
     + receive_message()
     + connect_to_bank()
 
@@ -37,7 +39,7 @@ class Bank {
     - id = string
     - bank_name = string
     - bank_email = string
-    - bank_account = Account[]
+    - bank_accounts = Account[]
     + get_request()
     + create_account()
     + delete_account()
