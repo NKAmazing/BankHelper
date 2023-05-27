@@ -22,7 +22,7 @@ More Information in the coming weeks...
 
 Credits:
 - Developer: [<i>Nicolas Mayoral</i>](https://github.com/NKAmazing)
-- Instructors: <i>[Diego Navarro](https://github.com/d1cor)
+- Instructors: <i>[Diego Cordoba](https://github.com/d1cor)
   
 - Institution: [<i>Universidad de Mendoza - Facultad de Ingenieria</i>](https://um.edu.ar/ingenieria/)
 
