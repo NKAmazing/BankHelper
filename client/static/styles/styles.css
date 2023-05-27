@@ -1,0 +1,370 @@
+root{
+    --color_fondo: hsl(0, 0%, 19%);
+    --fondo_blanco: rgb(207, 208, 209);
+}
+
+.header {
+    position: sticky;
+    top: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: lighter;
+}
+.nav * {
+  box-sizing: border-box;
+  transition: all .35s ease;
+  
+}
+
+.nav li {
+  display: inline-block;
+  list-style: outside none none;
+  margin: .5em 1em;
+  padding: 0;
+}
+
+.nav li {
+  padding: .5em .8em;
+  position: relative;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+}
+
+.nav li::before,
+.nav li::after {
+  content: '';
+  height: 14px;
+  width: 14px;
+  position: absolute;
+  transition: all .35s ease;
+  opacity: 0;
+}
+
+.nav li::before {
+  content: '';
+  right: 0;
+  top: 0;
+  border-top: 3px solid hsl(182, 90%, 52%);
+  border-right: 3px solid hsl(182, 90%, 52%);
+  transform: translate(-100%, 50%);
+}
+
+.nav li:after {
+  content: '';
+  left: 0;
+  bottom: 0;
+  border-bottom: 3px solid hsl(182, 90%, 52%);
+  border-left: 3px solid hsl(182, 90%, 52%);
+  transform: translate(100%, -50%)
+}
+
+.nav li:hover:before,
+.nav li:hover:after{
+  transform: translate(0,0);
+  opacity: 1;
+}
+
+.nav li:hover {
+  color: hsl(180, 94%, 51%);
+}
+
+.header-img {
+    object-position: 0 bottom;
+    vertical-align: top;
+    object-fit: cover;
+}
+.fondo {
+    background-color: rgb(229, 229, 233);
+}
+
+.card-chat {
+    margin: 10px;
+    border-radius: 30px;
+    text-align: center;
+}
+.item {
+    align-items: center;
+}
+.item > div {
+    flex-basis: 100%;
+}
+/* No funciona, pero es para determinar el tamaño de cada una de las 3 partes
+de la página*
+/* .item > div:nth-child(2) > div {
+    max-width: 70%;
+}
+.item > div:nth-child(1) > div {
+    max-width: 15%;
+}
+.item > div:nth-child(3) > div {
+    max-width: 15%;
+} */
+.item1 {
+    flex-basis: 15%;
+    text-align: center;
+}
+
+.item2 {
+    flex-basis: 70%
+}
+
+.item3 {
+    flex-basis: 15%;
+    text-align: center;
+}
+.chat-img {
+    width: 100px;
+    height: 150px;
+    border-radius: 15px;
+    align-self: center;   
+}
+
+.text {
+    font-size: 15px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.chat_box {
+    background-color: var(--fondo_blanco);
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+    width: 80%;
+    height: 280px;
+}
+
+.message_box {
+    width: 80%;
+    height: 100px;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+    background-color: var(--fondo_blanco);
+
+}
+
+.subm_button {
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+    font-size: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+} 
+
+.message_box {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin-top: 15px;
+}
+    
+#chat-log {
+display: flex;
+flex-direction: column;
+overflow-y: auto;
+height: 100%;
+padding: 15px;
+border: 1px solid #e6e6e6;
+}
+
+.messages {
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+justify-content: flex-start;
+width: 100%;
+}
+
+.message {
+display: flex;
+flex-direction: row;
+align-items: center;
+margin-bottom: 10px;
+}
+
+.user-message {
+background-color: #0084ff;
+color: #fff;
+border-radius: 15px 15px 0 15px;
+padding: 10px 15px;
+max-width: 70%;
+}
+
+.other-message {
+background-color: #f2f2f2;
+color: #333;
+border-radius: 15px 15px 15px 0;
+padding: 10px 15px;
+max-width: 70%;
+}
+
+.user-message .time,
+.other-message .time {
+font-size: 10px;
+margin-left: 5px;
+}
+
+.user-message .time {
+text-align: right;
+margin-left: auto;
+}
+
+.message .avatar {
+width: 30px;
+height: 30px;
+margin-right: 10px;
+border-radius: 50%;
+background-color: #ccc;
+overflow: hidden;
+}
+
+.message .avatar img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+}
+
+.message .name {
+font-weight: bold;
+margin-right: 10px;
+text-overflow: ellipsis;
+overflow: hidden;
+white-space: nowrap;
+max-width: 100px;
+}
+
+.message .content {
+flex-grow: 1;
+}
+
+.message-form {
+display: flex;
+align-items: center;
+background-color: #f2f2f2;
+padding: 10px;
+}
+
+.message-form input[type="text"] {
+flex-grow: 1;
+padding: 10px;
+border: none;
+border-radius: 15px;
+margin-right: 10px;
+font-size: 16px;
+}
+
+.message-form button[type="submit"] {
+background-color: #0084ff;
+color: #fff;
+border: none;
+border-radius: 15px;
+padding: 10px 15px;
+font-size: 16px;
+cursor: pointer;
+}
+
+/* Efecto hoover para las cards */ 
+.card-hov {
+    justify-content: center;
+    position: relative;
+    transition: 1s box-shadow;
+  }
+  
+  .card-hov:hover {
+    box-shadow: 0 5px 35px 0px rgba(0,0,0,.1);
+  }
+  
+  .card-hov:hover::before, .card-hov:hover::after {
+    display: block;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: hwb(182 0% 2%);
+    border-radius: 30px;
+    z-index: -1;
+    animation: 1s clockwise infinite;
+  }
+  
+  .card-hov:hover:after {
+    background: hwb(219 19% 2%);
+    animation: 1.5s counterclockwise infinite;
+  }
+  
+  @keyframes clockwise {
+    0% {
+      top: -5px;
+      left: 0;
+    }
+    12% {
+      top: -2px;
+      left: 2px;
+    }
+    25% {
+      top: 0;
+      left: 5px;    
+    }
+    37% {
+      top: 2px;
+      left: 2px;
+    }
+    50% {
+      top: 5px;
+      left: 0;    
+    }
+    62% {
+      top: 2px;
+      left: -2px;
+    }
+    75% {
+      top: 0;
+      left: -5px;
+    }
+    87% {
+      top: -2px;
+      left: -2px;
+    }
+    100% {
+      top: -5px;
+      left: 0;    
+    }
+  }
+  
+  @keyframes counterclockwise {
+    0% {
+      top: -5px;
+      right: 0;
+    }
+    12% {
+      top: -2px;
+      right: 2px;
+    }
+    25% {
+      top: 0;
+      right: 5px;    
+    }
+    37% {
+      top: 2px;
+      right: 2px;
+    }
+    50% {
+      top: 5px;
+      right: 0;    
+    }
+    62% {
+      top: 2px;
+      right: -2px;
+    }
+    75% {
+      top: 0;
+      right: -5px;
+    }
+    87% {
+      top: -2px;
+      right: -2px;
+    }
+    100% {
+      top: -5px;
+      right: 0;    
+    }
+  }
