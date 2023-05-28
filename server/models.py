@@ -1,5 +1,5 @@
 from django.db import models
-from ..client.models import User
+from client.models import User
 
 # Create your models here.
 
@@ -15,4 +15,4 @@ class Message(models.Model):
     content = models.CharField(max_length=200)
     date = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    chat = models.ForeignKey(Chat, on_delete=models.CASCADE)
+    chat_reference = models.ForeignKey(Chat, on_delete=models.CASCADE)

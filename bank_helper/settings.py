@@ -74,7 +74,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'bank_helper.wsgi.application'
+# WSGI_APPLICATION = 'bank_helper.wsgi.application'
 ASGI_APPLICATION = 'bank_helper.asgi.application'
 
 

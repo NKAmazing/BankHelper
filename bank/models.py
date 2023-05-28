@@ -10,7 +10,7 @@ class Bank(models.Model):
     bank_accounts = models.ManyToManyField('Account', blank=True)
 
 class Transaction(models.Model):
-    id = models.CharField(max_length=100)
+    id = models.AutoField(primary_key=True)
     amount = models.FloatField()
     date = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=100)
