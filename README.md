@@ -1,6 +1,6 @@
 <h1 align="center"> BankHelper </h1>
 
-![Cover Bank Helper](https://github.com/NKAmazing/BankHelper/assets/83615373/96713184-837a-4f2c-888f-d488528ef65e)
+![Cover Bank Helper](https://github.com/NKAmazing/BankHelper/assets/83615373/507cffbc-ecb7-4f79-a901-da1d236817c5)
 
 #
 
@@ -22,7 +22,7 @@ More Information in the coming weeks...
 
 Credits:
 - Developer: [<i>Nicolas Mayoral</i>](https://github.com/NKAmazing)
-- Instructors: <i>[Diego Cordoba](https://github.com/d1cor)
+- Instructors: [<i>Diego Cordoba</i>](https://github.com/d1cor)
   
 - Institution: [<i>Universidad de Mendoza - Facultad de Ingenieria</i>](https://um.edu.ar/ingenieria/)
 
