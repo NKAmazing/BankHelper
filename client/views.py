@@ -8,3 +8,6 @@ def chat(request):
     context = {'message': 'Hola desde el backend'}
 
     return render(request, 'chat.html', context)
+
+def lobby(request):
+    return render(request, 'lobby.html')

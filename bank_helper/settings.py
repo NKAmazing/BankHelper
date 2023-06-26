@@ -77,6 +77,16 @@ TEMPLATES = [
 # WSGI_APPLICATION = 'bank_helper.wsgi.application'
 ASGI_APPLICATION = 'bank_helper.asgi.application'
 
+CHANNEL_LAYERS = {
+
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('localhost', 6380)],
+        },
+    }
+}
+
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases

@@ -5,6 +5,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('chat/', chat, name='chat'),
+    path('chat/', TemplateView.as_view(template_name='chat.html')),
+    path('lobby/', TemplateView.as_view(template_name='lobby.html')),
     path('', TemplateView.as_view(template_name='index.html')),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

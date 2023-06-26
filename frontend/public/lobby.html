@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Lobby</title>
+    </head>
+    <body>
+        <h1>Lets chat!</h1>
+
+        <form id="chat-form">
+            <input type="text" id="message">
+            <button type="submit">Send</button>
+        </form>
+
+        <div id="messages"></div>
+
+        <script type="text/javascript"></script>
+        <script src="{% static 'scripts/chatEngine.js' %}"></script>
+    </body>
+</html>
