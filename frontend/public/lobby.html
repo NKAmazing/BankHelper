@@ -1,58 +1,74 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Lobby</title>
-    </head>
-    <body>
-        <h1>Lets chat!</h1>
-
+<html>
+<head>
+    <title>Chat Template</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/style_chat.css' %}">
+</head>
+<body>
+    <div class="chat-container">
+        <div id="message_box" class="chat-messages">
+            <div id="messages">
+                <div class="message received">
+                    <p>Hello, What can i do for you?</p>
+                </div>
+                <div class="message sent">
+                    <p>I would like to know information about your services.</p>
+                </div>
+            </div>
+        </div>
         <form id="chat-form">
-            <input type="text" id="message">
-            <button type="submit">Send</button>
+            <div class="user-input">
+                <input type="text" id="message" placeholder="Write your message here...">
+                <button type="submit">Send</button>
+            </div>
         </form>
+    </div>
+    <script type="text/javascript"></script>
+    <script>
+        let url = `ws://${window.location.host}/ws/socket-server/`;
 
-        <div id="messages"></div>
+        const socket = new WebSocket(url);
 
-        <script type="text/javascript"></script>
-        <script>
-            let url = `ws://${window.location.host}/ws/socket-server/`;
+        socket.onopen = function(event) {
+            console.log('WebSocket is connected.');
+        }
 
-            const socket = new WebSocket(url);
+        // Función para hacer scroll hacia abajo en el chat
+        function scrollToBottom() {
+            const chatLog = document.getElementById('message_box');
+            chatLog.scrollTop = chatLog.scrollHeight;
+        };
 
-            socket.onopen = function(event) {
-                console.log('WebSocket is connected.');
+        socket.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+        
+            console.log("Data: ", data);
+        
+            if (data.type === 'chat') {
+            const messageContainer = document.getElementById('messages');
+            const messageElement = document.createElement('div');
+            messageElement.innerHTML = `<p>${data.message}</p>`;
+            messageContainer.appendChild(messageElement);
             }
 
-            socket.onmessage = function(event) {
-                const data = JSON.parse(event.data);
-            
-                console.log("Data: ", data);
-            
-                if (data.type === 'chat') {
-                const messageContainer = document.getElementById('messages');
-                const messageElement = document.createElement('div');
-                messageElement.innerHTML = `<p>${data.message}</p>`;
-                messageContainer.appendChild(messageElement);
-                }
-            }      
+            scrollToBottom();
+        }      
 
-            socket.onclose = function(event) {
-                console.log('WebSocket is closed.');
-            }
+        socket.onclose = function(event) {
+            console.log('WebSocket is closed.');
+        }
 
-            let form = document.getElementById('chat-form')
-            form.addEventListener('submit', (event)=> {
-                event.preventDefault()
-                let message = event.target.message.value
-                socket.send(JSON.stringify({
-                    'message': message
-                }))
-                form.reset()
-            })
+        let form = document.getElementById('chat-form')
+        form.addEventListener('submit', (event)=> {
+            event.preventDefault()
+            let message = event.target.message.value
+            socket.send(JSON.stringify({
+                'message': message
+            }))
+            form.reset()
+        })
 
-        </script>
-    </body>
+    </script>
+</body>
 </html>
