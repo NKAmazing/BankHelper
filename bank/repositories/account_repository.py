@@ -35,9 +35,3 @@ class AccountRepository(Create, Read, Update, Delete):
     
     def find_by_account_number(self, account_number):
         return AccountModel.objects.get(account_number=account_number)
-    
-    def find_by_balance(self, balance):
-        return AccountModel.objects.get(balance=balance)
-    
-    def find_by_transactions(self, transactions):
-        return AccountModel.objects.get(transactions=transactions)
