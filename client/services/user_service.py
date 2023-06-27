@@ -12,7 +12,7 @@ class UserService(Service):
     def __init__(self):
         self.__repository = UserRepository()
 
-    def add(self, username, email, password, address, phone, account=None):
+    def add(self, username, email, password, address, phone, account):
         '''
         Method to add a User
         param:
@@ -29,7 +29,7 @@ class UserService(Service):
             password = password,
             address = address,
             phone = phone,
-            # account = account
+            account = account
         )
         return self.__repository.create(model)
     

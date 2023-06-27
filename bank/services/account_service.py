@@ -12,7 +12,7 @@ class AccountService(Service):
     def __init__(self):
         self.__repository = AccountRepository()
 
-    def add(self, account_number, balance, transactions):
+    def add(self, account_number, balance):
         '''
         Method to add a Account
         param:
@@ -23,8 +23,8 @@ class AccountService(Service):
         model = AccountModel(
             account_number = account_number,
             balance = balance,
-            transactions = transactions
         )
+
         return self.__repository.create(model)
     
     def get_all(self):
@@ -48,3 +48,28 @@ class AccountService(Service):
             - account_number: Account Number of the Account
         '''
         return self.__repository.find_by_account_number(account_number)
+    
+    def update(self, id, account_number, balance):
+        '''
+        Method to update a Account
+        param:
+            - id: Id of the Account
+            - account_number: Account Number of the Account
+            - balance: Balance of the Account
+            - transactions: Transactions of the Account
+        '''
+        model = AccountModel(
+            id = id,
+            account_number = account_number,
+            balance = balance,
+        )
+
+        return self.__repository.update(model)
+    
+    def delete(self, id):
+        '''
+        Method to delete a Account
+        param:
+            - id: Id of the Account
+        '''
+        return self.__repository.delete_by_id(id)

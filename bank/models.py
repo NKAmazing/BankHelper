@@ -3,12 +3,6 @@ from django.conf import settings
 
 # Create your models here.
 
-class Bank(models.Model):
-    id = models.AutoField(primary_key=True) 
-    bank_name = models.CharField(max_length=100)
-    bank_email = models.EmailField(max_length=100)
-    bank_accounts = models.ManyToManyField('Account', blank=True)
-
 class Transaction(models.Model):
     id = models.AutoField(primary_key=True)
     amount = models.FloatField()
@@ -21,4 +15,9 @@ class Account(models.Model):
     id = models.AutoField(primary_key=True)
     account_number = models.CharField(max_length=100)
     balance = models.FloatField()
-    transactions = models.ManyToManyField(Transaction)
+    bank = models.ForeignKey('Bank', on_delete=models.CASCADE, blank=True, null=True)
+
+class Bank(models.Model):
+    id = models.AutoField(primary_key=True) 
+    bank_name = models.CharField(max_length=100)
+    bank_email = models.EmailField(max_length=100)

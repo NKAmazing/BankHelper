@@ -1,6 +1,7 @@
 from ..repositories.bank_repository import BankRepository
 from .services import Service
 from ..models import Bank as BankModel
+from ..models import Account as AccountModel
 
 class BankService(Service):
     '''
@@ -12,19 +13,18 @@ class BankService(Service):
     def __init__(self):
         self.__repository = BankRepository()
 
-    def add(self, bank_name, bank_email, bank_accounts):
+    def add(self, bank_name, bank_email):
         '''
         Method to add a Bank
         param:
             - bank_name: Name of the Bank
             - bank_email: Email of the Bank
-            - bank_accounts: Accounts of the Bank
         '''
         model = BankModel(
-            bank_name = bank_name,
-            bank_email = bank_email,
-            bank_accounts = bank_accounts
+            bank_name=bank_name,
+            bank_email=bank_email
         )
+
         return self.__repository.create(model)
     
     def get_all(self):
@@ -56,3 +56,27 @@ class BankService(Service):
             - bank_email: Email of the Bank
         '''
         return self.__repository.find_by_bank_email(bank_email)
+    
+    def update(self, id, bank_name, bank_email):
+        '''
+        Method to update a Bank
+        param:
+            - id: Id of the Bank
+            - bank_name: Name of the Bank
+            - bank_email: Email of the Bank
+        '''
+        model = BankModel(
+            id=id,
+            bank_name=bank_name,
+            bank_email=bank_email
+        )
+
+        return self.__repository.update(model)
+    
+    def delete(self, id):
+        '''
+        Method to delete a Bank
+        param:
+            - id: Id of the Bank
+        '''
+        return self.__repository.delete_by_id(id)
