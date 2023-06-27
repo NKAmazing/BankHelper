@@ -26,7 +26,7 @@ class UserRepository(Create, Read, Update, Delete):
             password = model.password,
             address = model.address,
             phone = model.phone,
-            account = model.account
+            # account = model.account
         )
         return model.save()
     
@@ -44,3 +44,30 @@ class UserRepository(Create, Read, Update, Delete):
     
     def find_by_account(self, account):
         return UserModel.objects.get(account=account)
+    
+    def update(self, model):
+        model = UserModel(
+            id = model.id,
+            username = model.username,
+            email = model.email,
+            password = model.password,
+            address = model.address,
+            phone = model.phone,
+            # account = model.account
+        )
+        return model.save()
+    
+    def delete(self, model):
+        model = UserModel(
+            id = model.id,
+            username = model.username,
+            email = model.email,
+            password = model.password,
+            address = model.address,
+            phone = model.phone,
+            # account = model.account
+        )
+        return model.delete()
+
+    def delete_by_id(self, id: int):
+        return super().delete_by_id(id)

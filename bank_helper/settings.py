@@ -28,7 +28,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -44,6 +43,7 @@ INSTALLED_APPS = [
     'channels',
     'channels_redis',
     'websockets',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -61,7 +61,7 @@ ROOT_URLCONF = 'bank_helper.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'frontend/build')],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -88,6 +88,7 @@ CHANNEL_LAYERS = {
 }
 
 
+
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -102,6 +103,10 @@ DATABASES = {
     }
 }
 
+# Authentication for Django Rest Framework
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -142,11 +147,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATIC_ROOT  = os.path.join(BASE_DIR, 'staticfiles')
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'frontend/build/static'),
-]
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
