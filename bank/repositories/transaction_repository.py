@@ -2,7 +2,7 @@ from .repository import Create, Read, Update, Delete
 from ..models import Transaction as TransactionModel
 import json
 
-class TransactionModel(Create, Read, Update, Delete):
+class TransactionRepository(Create, Read, Update, Delete):
     '''
     Class to manage the CRUD of the Transaction model
     param:
@@ -49,3 +49,20 @@ class TransactionModel(Create, Read, Update, Delete):
     
     def find_by_destination_account(self, destination_account):
         return TransactionModel.objects.get(destination_account=destination_account)
+    
+    def update(self, model):
+        model = TransactionModel(
+            id = model.id,
+            amount = model.amount,
+            date = model.date,
+            status = model.status,
+            source_account = model.source_account,
+            destination_account = model.destination_account
+        )
+        return model.save()
+    
+    def delete(self, model):
+        return model.delete()
+    
+    def delete_by_id(self, id: int):
+        return TransactionModel.objects.get(id=id).delete()

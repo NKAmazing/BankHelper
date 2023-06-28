@@ -1,7 +1,6 @@
 from ..repositories.bank_repository import BankRepository
 from .services import Service
 from ..models import Bank as BankModel
-from ..models import Account as AccountModel
 
 class BankService(Service):
     '''

@@ -51,3 +51,32 @@ class TransactionService(Service):
     
     def get_by_destination_account(self, destination_account):
         return self.__repository.find_by_destination_account(destination_account)
+    
+    def update(self, id, amount, date, status, source_account, destination_account):
+        '''
+        Method to update a Transaction
+        param:
+            - id: Id of the Transaction
+            - amount: Amount of the Transaction
+            - date: Date of the Transaction
+            - status: Status of the Transaction
+            - source_account: Source Account of the Transaction
+            - destination_account: Destination Account of the Transaction
+        '''
+        model = TransactionModel(
+            id = id,
+            amount = amount,
+            date = date,
+            status = status,
+            source_account = source_account,
+            destination_account = destination_account
+        )
+        return self.__repository.update(model)
+    
+    def delete(self, id):
+        '''
+        Method to delete a Transaction
+        param:
+            - id: Id of the Transaction
+        '''
+        return self.__repository.delete_by_id(id)
