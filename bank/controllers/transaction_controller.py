@@ -12,11 +12,11 @@ transaction_service = TransactionService()
 def create(request):
     amount = request.data.get('amount')
     date = datetime.now()
-    status = request.data.get('status')
+    status_transaction = request.data.get('status')
     source_account = request.data.get('source_account')
     destination_account = request.data.get('destination_account')
     try:
-        transaction_service.add(amount, date, status, source_account, destination_account)
+        transaction_service.add(amount, date, status_transaction, source_account, destination_account)
         return Response("Transaction created successfully", status=status.HTTP_201_CREATED)
     except Exception as e:
         return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
@@ -43,11 +43,11 @@ def get_by_id(request, id):
 def update(request, id):
     amount = request.data.get('amount')
     date = datetime.now()
-    status = request.data.get('status')
+    status_transaction = request.data.get('status')
     source_account = request.data.get('source_account')
     destination_account = request.data.get('destination_account')
     try:
-        transaction_service.update(id, amount, date, status, source_account, destination_account)
+        transaction_service.update(id, amount, date, status_transaction, source_account, destination_account)
         return Response("Transaction updated successfully", status=status.HTTP_200_OK)
     except Exception as e:
         return Response(str(e), status=status.HTTP_400_BAD_REQUEST)

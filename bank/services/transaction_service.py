@@ -1,6 +1,8 @@
 from ..repositories.transaction_repository import TransactionRepository
 from .services import Service
 from ..models import Transaction as TransactionModel
+from .account_service import AccountService
+
 
 class TransactionService(Service):
     '''
@@ -11,8 +13,9 @@ class TransactionService(Service):
 
     def __init__(self):
         self.__repository = TransactionRepository()
+        self.__account_service = AccountService()
 
-    def add(self, amount, date, status, source_account, destination_account):
+    def add(self, amount, date, status, source_account_id, destination_account_id):
         '''
         Method to add a Transaction
         param:
@@ -22,6 +25,9 @@ class TransactionService(Service):
             - source_account: Source Account of the Transaction
             - destination_account: Destination Account of the Transaction
         '''
+        source_account = self.__account_service.get_by_id(source_account_id)
+        destination_account = self.__account_service.get_by_id(destination_account_id)
+
         model = TransactionModel(
             amount = amount,
             date = date,
@@ -52,7 +58,7 @@ class TransactionService(Service):
     def get_by_destination_account(self, destination_account):
         return self.__repository.find_by_destination_account(destination_account)
     
-    def update(self, id, amount, date, status, source_account, destination_account):
+    def update(self, id, amount, date, status, source_account_id, destination_account_id):
         '''
         Method to update a Transaction
         param:
@@ -63,6 +69,9 @@ class TransactionService(Service):
             - source_account: Source Account of the Transaction
             - destination_account: Destination Account of the Transaction
         '''
+        source_account = self.__account_service.get_by_id(source_account_id)
+        destination_account = self.__account_service.get_by_id(destination_account_id)
+
         model = TransactionModel(
             id = id,
             amount = amount,
