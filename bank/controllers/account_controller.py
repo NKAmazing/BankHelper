@@ -11,8 +11,9 @@ account_service = AccountService()
 def create(request):
     account_number = request.data.get('account_number')
     balance = request.data.get('balance')
+    bank_id = request.data.get('bank_id')
     try:
-        account_service.add(account_number, balance)
+        account_service.add(account_number, balance, bank_id)
         return Response("Account created successfully", status=status.HTTP_201_CREATED)
     except Exception as e:
         return Response(str(e), status=status.HTTP_400_BAD_REQUEST)

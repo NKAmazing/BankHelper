@@ -19,6 +19,12 @@ class AccountRepository(Create, Read, Update, Delete):
         return self.__type_model
     
     def create(self, model):
+        model = AccountModel(
+            id = model.id,
+            account_number = model.account_number,
+            balance = model.balance,
+            bank = model.bank
+        )
         return model.save()
     
     def find_all(self):

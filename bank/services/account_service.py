@@ -1,6 +1,7 @@
 from ..repositories.account_repository import AccountRepository
 from .services import Service
 from ..models import Account as AccountModel
+from .bank_service import BankService
 
 class AccountService(Service):
     '''
@@ -11,8 +12,9 @@ class AccountService(Service):
 
     def __init__(self):
         self.__repository = AccountRepository()
+        self.__bank_service = BankService()
 
-    def add(self, account_number, balance):
+    def add(self, account_number, balance, bank_id):
         '''
         Method to add a Account
         param:
@@ -20,9 +22,12 @@ class AccountService(Service):
             - balance: Balance of the Account
             - transactions: Transactions of the Account
         '''
+        bank = self.__bank_service.get_by_id(bank_id)
+
         model = AccountModel(
             account_number = account_number,
             balance = balance,
+            bank = bank
         )
 
         return self.__repository.create(model)

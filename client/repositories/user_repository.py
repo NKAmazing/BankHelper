@@ -26,7 +26,7 @@ class UserRepository(Create, Read, Update, Delete):
             password = model.password,
             address = model.address,
             phone = model.phone,
-            # account = model.account
+            account = model.account
         )
         return model.save()
     

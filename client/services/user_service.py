@@ -1,6 +1,7 @@
 from ..repositories.user_repository import UserRepository
 from .services import Service
 from ..models import User as UserModel
+from bank.services.account_service import AccountService
 
 class UserService(Service):
     '''
@@ -11,8 +12,9 @@ class UserService(Service):
 
     def __init__(self):
         self.__repository = UserRepository()
+        self.__account_service = AccountService()
 
-    def add(self, username, email, password, address, phone, account):
+    def add(self, username, email, password, address, phone, account_id):
         '''
         Method to add a User
         param:
@@ -23,6 +25,9 @@ class UserService(Service):
             - phone: Phone of the User
             - account: Account of the User
         '''
+        account = self.__account_service.get_by_id(account_id)
+        print("ESTO ES ACCOUNT: ", account)
+
         model = UserModel(
             username = username,
             email = email,

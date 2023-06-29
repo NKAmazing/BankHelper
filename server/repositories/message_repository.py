@@ -42,3 +42,26 @@ class MessageRepository(Create, Read, Update, Delete):
     
     def find_by_chat_reference(self, chat_reference):
         return MessageModel.objects.get(chat_reference=chat_reference)
+    
+    def update(self, model):
+        model = MessageModel(
+            id = model.id,
+            content = model.content,
+            date = model.date,
+            user = model.user,
+            chat_reference = model.chat_reference
+        )
+        return model.save()
+    
+    def delete(self, model):
+        model = MessageModel(
+            id = model.id,
+            content = model.content,
+            date = model.date,
+            user = model.user,
+            chat_reference = model.chat_reference
+        )
+        return model.delete()
+    
+    def delete_by_id(self, id):
+        return MessageModel.objects.get(id=id).delete()

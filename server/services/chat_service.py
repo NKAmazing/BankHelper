@@ -12,7 +12,7 @@ class ChatService(Service):
     def __init__(self):
         self.__repository = ChatRepository()
 
-    def add(self, chat_name, date, messages):
+    def add(self, chat_name, date):
         '''
         Method to add a Chat
         param:
@@ -22,8 +22,7 @@ class ChatService(Service):
         '''
         model = ChatModel(
             chat_name = chat_name,
-            date = date,
-            messages = messages
+            date = date
         )
         return self.__repository.create(model)
     
@@ -48,3 +47,26 @@ class ChatService(Service):
             - chat_name: Name of the Chat
         '''
         return self.__repository.find_by_chat_name(chat_name)
+    
+    def update(self, id, chat_name, date):
+        '''
+        Method to update a Chat
+        param:
+            - id: Id of the Chat
+            - chat_name: Name of the Chat
+            - date: Date of the Chat
+            - messages: Messages of the Chat
+        '''
+        model = ChatModel(
+            chat_name = chat_name,
+            date = date
+        )
+        return self.__repository.update(id, model)
+    
+    def delete(self, id):
+        '''
+        Method to delete a Chat
+        param:
+            - id: Id of the Chat
+        '''
+        return self.__repository.delete_by_id(id)
