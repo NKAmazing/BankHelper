@@ -87,7 +87,9 @@ CHANNEL_LAYERS = {
     }
 }
 
-
+# Celery Configuration of Redis
+CELERY_BROKER_URL = 'redis://localhost:6380/1'
+CELERY_RESULT_BACKEND = 'redis://localhost:6380/2'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases

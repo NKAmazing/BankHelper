@@ -55,6 +55,9 @@ class TransactionService(Service):
     def get_by_source_account(self, source_account):
         return self.__repository.find_by_source_account(source_account)
     
+    def get_all_by_source_account(self, source_account):
+        return self.__repository.find_all_by_source_account(source_account)
+    
     def get_by_destination_account(self, destination_account):
         return self.__repository.find_by_destination_account(destination_account)
     

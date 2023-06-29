@@ -39,6 +39,15 @@ def get_by_id(request, id):
     except Exception as e:
         return Response(str(e), status=status.HTTP_404_NOT_FOUND)
     
+@api_view(['GET'])
+def get_all_by_source_account(request, source_account):
+    try:
+        transactions = transaction_service.get_all_by_source_account(source_account)
+        serializer = TransactionSerializer(transactions, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response(str(e), status=status.HTTP_404_NOT_FOUND)
+    
 @api_view(['PUT'])
 def update(request, id):
     amount = request.data.get('amount')

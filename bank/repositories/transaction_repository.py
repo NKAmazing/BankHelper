@@ -46,6 +46,9 @@ class TransactionRepository(Create, Read, Update, Delete):
     
     def find_by_source_account(self, source_account):
         return TransactionModel.objects.get(source_account=source_account)
+
+    def find_all_by_source_account(self, source_account):
+        return TransactionModel.objects.filter(source_account=source_account)
     
     def find_by_destination_account(self, destination_account):
         return TransactionModel.objects.get(destination_account=destination_account)

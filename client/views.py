@@ -5,6 +5,9 @@ from .services.user_service import UserService
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
+import json
 
 # Create your views here.
 
@@ -18,7 +21,7 @@ def chat(request):
 
     return render(request, 'chat.html', context)
 
-@login_required
+# @login_required
 def lobby(request):
     return render(request, 'lobby.html')
 

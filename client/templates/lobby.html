@@ -10,10 +10,12 @@
         <div id="message_box" class="chat-messages">
             <div id="messages">
                 <div class="message received">
-                    <p>Hello, What can i do for you?</p>
-                </div>
-                <div class="message sent">
-                    <p>I would like to know information about your services.</p>
+                    <p>Hello, What can I do for you?</p>
+                    <ul id="menu">
+                        <li><a href="#" data-action="get_account_info">Show information account</a></li>
+                        <li><a href="#" data-action="make_transaction">Make a transaction</a></li>
+                        <li><a href="#" data-action="show_transactions_list">Show transaction history</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -24,51 +26,7 @@
             </div>
         </form>
     </div>
-    <script type="text/javascript"></script>
-    <script>
-        let url = `ws://${window.location.host}/ws/socket-server/`;
-
-        const socket = new WebSocket(url);
-
-        socket.onopen = function(event) {
-            console.log('WebSocket is connected.');
-        }
-
-        // Función para hacer scroll hacia abajo en el chat
-        function scrollToBottom() {
-            const chatLog = document.getElementById('message_box');
-            chatLog.scrollTop = chatLog.scrollHeight;
-        };
-
-        socket.onmessage = function(event) {
-            const data = JSON.parse(event.data);
-        
-            console.log("Data: ", data);
-        
-            if (data.type === 'chat') {
-            const messageContainer = document.getElementById('messages');
-            const messageElement = document.createElement('div');
-            messageElement.innerHTML = `<p>${data.message}</p>`;
-            messageContainer.appendChild(messageElement);
-            }
-
-            scrollToBottom();
-        }      
-
-        socket.onclose = function(event) {
-            console.log('WebSocket is closed.');
-        }
-
-        let form = document.getElementById('chat-form')
-        form.addEventListener('submit', (event)=> {
-            event.preventDefault()
-            let message = event.target.message.value
-            socket.send(JSON.stringify({
-                'message': message
-            }))
-            form.reset()
-        })
-
-    </script>
+    <script type="text/javascript" src="{% static 'scripts/chatEngine.js' %}"></script>
+    <script src="{% static 'scripts/clickEventManager.js' %}"></script>
 </body>
 </html>

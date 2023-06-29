@@ -20,6 +20,7 @@ urlpatterns = [
     path('create_transaction/', transaction.create, name='create_transaction'),
     path('get_transactions/', transaction.get_all, name='get_all_transactions'),
     path('get_transaction/<int:id>/', transaction.get_by_id, name='get_transaction'),
+    path('get_transactions_by_source_account/<int:source_account>/', transaction.get_all_by_source_account, name='get_transactions_by_source_account'),
     path('update_transaction/<int:id>/', transaction.update, name='update_transaction'),
     path('delete_transaction/<int:id>/', transaction.delete, name='delete_transaction'),
 ]+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
