@@ -8,3 +8,4 @@ app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 
 app.conf.broker_url = settings.CELERY_BROKER_URL
 app.conf.result_backend = settings.CELERY_RESULT_BACKEND
+app.conf.celery_imports = settings.CELERY_IMPORTS

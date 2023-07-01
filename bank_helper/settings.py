@@ -88,8 +88,12 @@ CHANNEL_LAYERS = {
 }
 
 # Celery Configuration of Redis
-CELERY_BROKER_URL = 'redis://localhost:6380/1'
-CELERY_RESULT_BACKEND = 'redis://localhost:6380/2'
+CELERY_BROKER_URL = 'redis://localhost:6381/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6381/0'
+CELERY_IMPORTS = ('bank.workers.tasks', )
+# CELERY_ACCEPT_CONTENT = ['json']
+# CELERY_TASK_SERIALIZER = 'json'
+# CELERY_RESULT_SERIALIZER = 'json'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases

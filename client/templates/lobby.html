@@ -16,6 +16,18 @@
                         <li><a href="#" data-action="make_transaction">Make a transaction</a></li>
                         <li><a href="#" data-action="show_transactions_list">Show transaction history</a></li>
                     </ul>
+                    <!-- Ejemplo para el caso 'get_account_info' -->
+                    <input type="text" id="gai_account_id_input" class="hidden" placeholder="Enter account ID">
+                    <button type="button" id="get_account_info_button" class="hidden">Send</button>
+                    <!-- Ejemplo para el caso 'make_transaction' -->
+                    <input type="text" id="mt_account_id_input" class="hidden" placeholder="Enter account ID">
+                    <input type="text" id="mt_amount_input" class="hidden" placeholder="Enter amount">
+                    <input type="text" id="mt_destination_account_id_input" class="hidden" placeholder="Enter destination account ID">
+                    <button type="button" id="make_transaction_button" class="hidden">Send</button>
+
+                    <!-- Ejemplo para el caso 'show_transactions_list' -->
+                    <input type="text" id="stl_account_id_input" class="hidden" placeholder="Enter account ID">
+                    <button type="button" id="show_transactions_list_button" class="hidden">Send</button>
                 </div>
             </div>
         </div>
@@ -27,6 +39,6 @@
         </form>
     </div>
     <script type="text/javascript" src="{% static 'scripts/chatEngine.js' %}"></script>
-    <script src="{% static 'scripts/clickEventManager.js' %}"></script>
+    <!-- <script src="{% static 'scripts/clickEventManager.js' %}"></script> -->
 </body>
 </html>
