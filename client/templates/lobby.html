@@ -1,11 +1,11 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Chat Template</title>
+{% block title %}Chat{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'styles/style_chat.css' %}">
-</head>
-<body>
+{% endblock %}
+{% block content %}
     <div class="chat-container">
         <div id="message_box" class="chat-messages">
             <div id="messages">
@@ -42,5 +42,4 @@
     </div>
     <script type="text/javascript" src="{% static 'scripts/chatEngine.js' %}"></script>
     <!-- <script src="{% static 'scripts/clickEventManager.js' %}"></script> -->
-</body>
-</html>
+{% endblock %}

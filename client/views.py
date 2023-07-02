@@ -13,13 +13,9 @@ import json
 
 user_service = UserService()
 
-@login_required
-def chat(request):
-
-    # Obtén los datos necesarios del backend
-    context = {'message': 'Hola desde el backend'}
-
-    return render(request, 'chat.html', context)
+# @login_required
+def home(request):
+    return render(request, 'home.html')
 
 # @login_required
 def lobby(request):
