@@ -75,6 +75,31 @@ let url = `ws://${window.location.host}/ws/socket-server/`;
             }
         }
 
+        function handleServerResponse(data) {
+            // Verificar el tipo de respuesta recibida
+            if (data.action === 'get_account_info') {
+                // Manejar la respuesta para la acción 'get_account_info'
+                // Puedes acceder al resultado con data.result
+                // console.log('Resultado de get_account_info:', data.result);
+                // Aquí puedes actualizar el contenido del template para mostrar el resultado en el lugar correspondiente.
+                // Por ejemplo, puedes seleccionar un elemento en el DOM y establecer su contenido con el resultado:
+                document.getElementById('result-container').textContent = data.result;
+            } else if (data.action === 'make_transaction') {
+                // Manejar la respuesta para la acción 'make_transaction'
+                // Puedes acceder al resultado con data.result
+                // console.log('Resultado de make_transaction:', data.result);
+                // Actualizar el contenido del template con el resultado
+                document.getElementById('result-container').textContent = data.result;
+            } else if (data.action === 'show_transactions_list') {
+                // Manejar la respuesta para la acción 'show_transactions_list'
+                // Puedes acceder al resultado con data.result
+                // console.log('Resultado de show_transactions_list:', data.result);
+                // Actualizar el contenido del template con el resultado
+                document.getElementById('result-container').textContent = data.result;
+            }
+            // Asegúrate de manejar todos los demás casos o acciones posibles.
+        }
+
         socket.onmessage = function(event) {
             const data = JSON.parse(event.data);
         
@@ -85,6 +110,8 @@ let url = `ws://${window.location.host}/ws/socket-server/`;
                 const messageElement = document.createElement('div');
                 messageElement.innerHTML = `<p>${data.message}</p>`;
                 messageContainer.appendChild(messageElement);
+            } else {
+                handleServerResponse(data);
             }
 
             scrollToBottom();

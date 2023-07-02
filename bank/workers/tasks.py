@@ -5,10 +5,15 @@ import requests
 
 @app.task
 def get_account_info(account_id):
+    print('HOLA ESTOY EN GET ACCOUNT INFO')
+    print('ESTO ES ACCOUNT ID: ', account_id)
     # Make the request GET to the API REST of the bank
     url = f'http://localhost:8000/bank/get_account/{account_id}'
+    print('ESTO ES URL: ', url)
     response = requests.get(url)
+    print('ESTO ES RESPONSE: ', response)
     result = response.json()
+    print('ESTO ES RESULT: ', result)
     return result
 
 @app.task

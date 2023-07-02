@@ -24,7 +24,10 @@ class ChatConsumer(WebsocketConsumer):
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
         action = text_data_json['action']
-        return self.__menu_handler.handle_options(action, text_data_json)
+        
+        result = self.__menu_handler.handle_options(action, text_data_json)
+
+        self.send(text_data=json.dumps(result))
 
     # def receive(self, text_data):
     #     text_data_json = json.loads(text_data)

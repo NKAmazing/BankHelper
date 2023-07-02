@@ -11,13 +11,15 @@ class MenuHandler:
         if action == 'send_menu':
             self.send_menu()
         elif action == 'get_account_info':
-            self.handle_get_account_info(text_data_json)
+            result = self.handle_get_account_info(text_data_json)
         elif action == 'make_transaction':
-            self.handle_make_transaction(text_data_json)
+            result = self.handle_make_transaction(text_data_json)
         elif action == 'show_transactions_list':
-            self.handle_show_transactions_list(text_data_json)
+            result = self.handle_show_transactions_list(text_data_json)
         else:
             print('Error: Action does not exist')
+            result = {'error': 'Action does not exist'}
+        return result
 
     def send_menu(self):
         menu = {
@@ -38,7 +40,13 @@ class MenuHandler:
         print('ESTO ES ACCOUNT ID: ', account_id)
         print('TIPO DE DATO DE ACCOUNT ID: ', type(account_id))
         response = get_account_info.delay(account_id)
-        return response.get()
+        result = response.get()
+        print('ESTO ES RESULT: ', result)
+        response_data = {
+            'action': 'get_account_info',
+            'account_info': result
+        }
+        return response_data
         
 
     def handle_make_transaction(self, data):
@@ -49,7 +57,12 @@ class MenuHandler:
         amount = data['amount']
         destination_account_id = data['destination_account_id']
         response = make_transaction.delay(account_id, amount, destination_account_id)
-        return response.get()
+        result = response.get()
+        response_data = {
+            'action': 'make_transaction',
+            'transaction_info': result
+        }
+        return response_data
 
     def handle_show_transactions_list(self, data):
         '''
@@ -57,4 +70,9 @@ class MenuHandler:
         '''
         account_id = data['account_id']
         response = show_transactions_list.delay(account_id)
-        return response.get()
+        result = response.get()
+        response_data = {
+            'action': 'show_transactions_list',
+            'transactions_list': result
+        }
+        return response_data

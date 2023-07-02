@@ -1,5 +1,9 @@
 from celery import Celery
 from django.conf import settings
+import os
+
+# Configura la variable de entorno DJANGO_SETTINGS_MODULE
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'bank_helper.settings')
 
 app = Celery('bank_helper')
 
