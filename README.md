@@ -1,6 +1,6 @@
 <h1 align="center"> BankHelper </h1>
 
-![Cover Bank Helper](https://github.com/NKAmazing/BankHelper/assets/83615373/507cffbc-ecb7-4f79-a901-da1d236817c5)
+![Cover Bank Helper (1)](https://github.com/NKAmazing/BankHelper/assets/83615373/b89758ef-beb1-48b3-9ab3-41d8b1b2dec1)
 
 #
 
@@ -16,7 +16,7 @@ Features:
 
 ## About
 
-![Covers Subjects (1)](https://github.com/NKAmazing/BankHelper/assets/83615373/2d510241-f3e3-4dba-9f01-8d5c277dd767)
+![Covers Subjects (1)](https://github.com/NKAmazing/BankHelper/assets/83615373/6eda9633-3f17-4e8e-9333-5ad8ef59e104)
 
 <h3 align="center">
 
