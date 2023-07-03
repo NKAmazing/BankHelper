@@ -28,6 +28,8 @@ Bank helper is a simulation project of a bank asisstant created as a part of the
 
 The project in question has the condition of working with the tools and concepts seen during the course, such as concurrency of processes, sockets, task queues, etc.
 
+In addition, the functionality of a Django Backend with a REST API has been added in order to make HTTP requests to it. The idea of this REST API is that through the classic HTTP methods, it can connect to the server so that it can bring the necessary information requested by the user. All this through requests handled with WebSockets and Celery tasks to be able to consult the API through their respective URLs.
+
 * Tools used in the development of the project:
 <div align="center">
 
