@@ -14,6 +14,10 @@ Features:
 * Operate your balance
 * Check your recent transactions
 
+## Important
+
+This project is still in development. More information in the coming weeks.
+
 ## About
 
 ![Covers Subjects (1)](https://github.com/NKAmazing/BankHelper/assets/83615373/6eda9633-3f17-4e8e-9333-5ad8ef59e104)
