@@ -16,7 +16,7 @@ user_service = UserService()
 def home(request):
     return render(request, 'home.html')
 
-@login_required(login_url='/client/login/')
+# @login_required(login_url='/client/login/')
 def lobby(request):
     return render(request, 'lobby.html')
 
@@ -68,7 +68,7 @@ def register_view(request):
 
 def logout_view(request):
     # Eliminar la cookie de sesión
-    response = HttpResponseRedirect('/login/')
+    response = HttpResponseRedirect('/client/login/')
     response.delete_cookie('sessionid')
 
     # Limpiar la sesión actual

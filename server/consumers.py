@@ -23,23 +23,25 @@ class ChatConsumer(WebsocketConsumer):
 
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
-        action = text_data_json['action']
-        
-        result = self.__menu_handler.handle_options(action, text_data_json)
 
-        self.send(text_data=json.dumps(result))
+        if 'action' in text_data_json:
+            action = text_data_json['action']
 
-    # def receive(self, text_data):
-    #     text_data_json = json.loads(text_data)
-    #     message = text_data_json['message']
+            result = self.__menu_handler.handle_options(action, text_data_json)
 
-    #     async_to_sync(self.channel_layer.group_send)(
-    #         self.room_group_name,
-    #         {
-    #             'type':'chat_message',
-    #             'message': message
-    #         }
-    #     )
+            self.send(text_data=json.dumps(result))
+        elif 'message' in text_data_json:
+            message = text_data_json['message']
+
+            async_to_sync(self.channel_layer.group_send)(
+                self.room_group_name,
+                {
+                    'type':'chat_message',
+                    'message': message
+                }
+            )
+        else:
+            print("No data received")
 
     def chat_message(self, event):
         message = event['message']
