@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'styles/style_chat.css' %}">
 {% endblock %}
 {% block content %}
+<div class="chat-container-wrapper">
     <div class="chat-container">
         <div id="message_box" class="chat-messages">
             <div id="messages">
@@ -40,6 +41,7 @@
             </div>
         </form>
     </div>
-    <script type="text/javascript" src="{% static 'scripts/chatEngine.js' %}"></script>
-    <!-- <script src="{% static 'scripts/clickEventManager.js' %}"></script> -->
+</div>
+<script type="text/javascript" src="{% static 'scripts/chatEngine.js' %}"></script>
+<!-- <script src="{% static 'scripts/clickEventManager.js' %}"></script> -->
 {% endblock %}

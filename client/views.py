@@ -1,42 +1,51 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from rest_framework.decorators import api_view
 from .services.user_service import UserService
-from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password
-from channels.layers import get_channel_layer
-from asgiref.sync import async_to_sync
+from django.http import HttpResponse
+from datetime import datetime, timedelta
+from django.http import HttpResponse, HttpResponseRedirect
+from server.functions import search_user
 import json
 
 # Create your views here.
 
 user_service = UserService()
 
-# @login_required
 def home(request):
     return render(request, 'home.html')
 
-# @login_required
+@login_required(login_url='/client/login/')
 def lobby(request):
     return render(request, 'lobby.html')
 
 def login_view(request):
     if request.method == 'POST':
         email = request.POST.get('email')
-        print("Esto es email: ", email)
+        print(email)
         password = request.POST.get('password')
-        print("Esto es password: ", password)
-        user = authenticate(request, email=email, password=password)
-        print("Esto es user: ", user)
-        
-        if user is not None:
-            login(request, user)
-            return redirect('lobby')  # Redirige a la página de inicio después del inicio de sesión exitoso
+        print(password)
+        result = search_user(request, email)
+        print("ESTO ES DATA: ", result)
+        if result:            
+            # Get the password
+            passw = result['password']
+
+            print("ESTO ES PASSW: ", passw)
+
+            # Check if the password is correct
+            if password == passw:
+                # Set the session cookie
+                session_key = request.session.session_key
+                expiry_date = datetime.now() + timedelta(hours=1)
+                response = HttpResponseRedirect('/lobby/')
+                response.set_cookie('sessionid', session_key, expires=expiry_date)
+                return response
+            else:
+                return HttpResponse('Password incorrect')
         else:
-            error_message = 'Email or password not correct'
-            return render(request, 'login.html', {'error_message': error_message})
-    
+            return HttpResponse('User not found')
     return render(request, 'login.html')
 
 def register_view(request):
@@ -56,3 +65,14 @@ def register_view(request):
         user_service.add(username, email, hashed_password, address, phone, account_id)
         return redirect('login')
     return render(request, 'register.html')
+
+def logout_view(request):
+    # Eliminar la cookie de sesión
+    response = HttpResponseRedirect('/login/')
+    response.delete_cookie('sessionid')
+
+    # Limpiar la sesión actual
+    request.session.flush()
+
+    # Redireccionar al usuario a la página de inicio de sesión
+    return response

@@ -26,7 +26,6 @@ class UserService(Service):
             - account: Account of the User
         '''
         account = self.__account_service.get_by_id(account_id)
-        print("ESTO ES ACCOUNT: ", account)
 
         model = UserModel(
             username = username,
@@ -75,3 +74,36 @@ class UserService(Service):
             - account: Account of the User
         '''
         return self.__repository.find_by_account(account)
+    
+    def update(self, id, username, email, password, address, phone, account_id):
+        '''
+        Method to update a User
+        param:
+            - id: Id of the User
+            - username: Username of the User
+            - email: Email of the User
+            - password: Password of the User
+            - address: Address of the User
+            - phone: Phone of the User
+            - account: Account of the User
+        '''
+        account = self.__account_service.get_by_id(account_id)
+
+        model = UserModel(
+            id = id,
+            username = username,
+            email = email,
+            password = password,
+            address = address,
+            phone = phone,
+            account = account
+        )
+        return self.__repository.update(model)
+    
+    def delete(self, id):
+        '''
+        Method to delete a User
+        param:
+            - id: Id of the User
+        '''
+        return self.__repository.delete_by_id(id)

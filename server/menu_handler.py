@@ -8,6 +8,9 @@ import json
 class MenuHandler:
 
     def handle_options(self, action, text_data_json):
+        '''
+        Handle method for the management of the menu options
+        '''
         if action == 'send_menu':
             self.send_menu()
         elif action == 'get_account_info':
