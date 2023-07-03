@@ -1,4 +1,5 @@
-import { handleMenuClick, handleServerResponse } from './clickEventManager.js';
+import { handleMenuClick } from './clickEventManager.js';
+import { handleServerResponse } from './serverManager.js';
 
 let url = `ws://${window.location.host}/ws/socket-server/`;
 
