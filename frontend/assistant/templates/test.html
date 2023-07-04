@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="account_id">Account ID:</label>
+        <input type="text" name="account_id" id="account_id" required>
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+
+    {% if account %}
+    <h2>Account Details:</h2>
+    <p>Account ID: {{ account.id }}</p>
+    <p>Account Name: {{ account.name }}</p>
+    <p>Account Balance: {{ account.balance }}</p>
+    {% endif %}
+</body>
+</html>
