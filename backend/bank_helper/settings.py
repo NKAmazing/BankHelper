@@ -40,9 +40,6 @@ INSTALLED_APPS = [
     'client.apps.ClientConfig',
     'server.apps.ServerConfig',
     'bank.apps.BankConfig',
-    'channels',
-    'channels_redis',
-    'websockets',
     'rest_framework',
 ]
 
@@ -95,9 +92,6 @@ DATABASES = {
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
-
-SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
-
 
 # # User model
 # AUTH_USER_MODEL = 'client.User'
