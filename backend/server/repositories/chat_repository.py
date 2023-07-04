@@ -9,6 +9,7 @@ class ChatRepository(Create, Read, Update, Delete):
         - Create: Class that inherits from the Create interface
         - Read: Class that inherits from the Read interface
         - Update: Class that inherits from the Update interface
+        - Delete: Class that inherits from the Delete interface
     '''
 
     def __init__(self):
