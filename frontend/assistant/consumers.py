@@ -40,6 +40,7 @@ class ChatConsumer(WebsocketConsumer):
                     'message': message
                 }
             )
+            print("Message received: " + message)
         else:
             print("No data received")
 

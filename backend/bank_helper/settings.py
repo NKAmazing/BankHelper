@@ -77,24 +77,6 @@ TEMPLATES = [
 # WSGI_APPLICATION = 'bank_helper.wsgi.application'
 ASGI_APPLICATION = 'bank_helper.asgi.application'
 
-CHANNEL_LAYERS = {
-
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [('localhost', 6380)],
-        },
-    }
-}
-
-# Celery Configuration of Redis
-CELERY_BROKER_URL = 'redis://localhost:6381/0'
-CELERY_RESULT_BACKEND = 'redis://localhost:6381/0'
-CELERY_IMPORTS = ('bank.workers.tasks', )
-# CELERY_ACCEPT_CONTENT = ['json']
-# CELERY_TASK_SERIALIZER = 'json'
-# CELERY_RESULT_SERIALIZER = 'json'
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
