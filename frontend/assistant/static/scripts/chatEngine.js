@@ -75,28 +75,56 @@ function handleMenuClick(e) {
     }
 }
 
-function handleServerResponse(data) {
-if (data.action === 'get_account_info') {
-    document.getElementById('result-container').textContent = data.result;
-} else if (data.action === 'make_transaction') {
-    document.getElementById('result-container').textContent = data.result;
-} else if (data.action === 'show_transactions_list') {
-    document.getElementById('result-container').textContent = data.result;
+async function getBankName(bankId) {
+    console.log("Getting bank name for bank ID:", bankId);
+    try {
+      const response = await fetch(`http://localhost:8000/bank/get/${bankId}`);
+      const bankData = await response.json();
+      return bankData.bank_name;
+    } catch (error) {
+      console.error('Error al obtener el nombre del banco:', error);
+      return 'N/A';
+    }
 }
+  
+
+async function handleServerResponse(data) {
+    console.log("Handling server response:", data);
+
+    if (data.action === 'get_account_info') {
+        const accountInfo = data.account_info;
+        console.log("BANCO: ", accountInfo.bank)
+        const bankName = await getBankName(accountInfo.bank);
+        const formattedData = `
+        <div class="message received">
+            <p>Account Info:</p>
+            <p>Account Number: ${accountInfo.account_number}</p>
+            <p>Balance: ${accountInfo.balance.toFixed(2)}</p>
+            <p>Bank: ${bankName || 'N/A'}</p>
+        </div>
+        `;
+        document.getElementById('result-container').innerHTML = formattedData;
+    } else if (data.action === 'make_transaction') {
+        document.getElementById('result-container').textContent = JSON.stringify(data.result);
+    } else if (data.action === 'show_transactions_list') {
+        document.getElementById('result-container').textContent = JSON.stringify(data.result);
+    }
 }
 
 socket.onmessage = function(event) {
     const data = JSON.parse(event.data);
     const messageSent = document.getElementById('message-sent');
-
+    console.log("HOLA DESDE EL ONMESSAGE")
     console.log("Data: ", data);
 
     if (data.type === 'chat') {
+        console.log("HOLA DESDE EL IF")
         messageSent.innerHTML += `
             <p>${data.message}</p>
         `;
 
     } else {
+        console.log("HOLA DESDE EL ELSE")
         handleServerResponse(data);
     }
 

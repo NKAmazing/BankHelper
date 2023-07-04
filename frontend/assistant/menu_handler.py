@@ -16,6 +16,7 @@ class MenuHandler:
             self.send_menu()
         elif action == 'get_account_info':
             result = self.handle_get_account_info(text_data_json)
+            print('ESTO ES RESULT EN HANDLE OPTIONS: ', result)
         elif action == 'make_transaction':
             result = self.handle_make_transaction(text_data_json)
         elif action == 'show_transactions_list':
