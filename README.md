@@ -1,6 +1,6 @@
 <h1 align="center"> BankHelper </h1>
 
-![Cover Bank-Helper](https://github.com/NKAmazing/BankHelper/assets/83615373/3f61bb15-b7a7-405c-953a-a23092a1df80)
+![Cover Bank Helper](https://github.com/NKAmazing/BankHelper/assets/83615373/3ba93bb7-573f-4582-858a-f7c2de80a93c)
 
 #
 
