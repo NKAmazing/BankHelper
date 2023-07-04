@@ -6,24 +6,26 @@ socket.onopen = function(event) {
     console.log('WebSocket is connected.');
 }
 
-// Función para hacer scroll hacia abajo en el chat
+// Function to scroll to the bottom of the chat log
 function scrollToBottom() {
     const chatLog = document.getElementById('message_box');
     chatLog.scrollTop = chatLog.scrollHeight;
 };
 
+// Function to handle the menu click
 function handleMenuClick(e) {
     const action = e.target.getAttribute('data-action');
     if (action) {
-        // Llamar a la función correspondiente según la acción seleccionada
+        // Call the function with the specified action
         if (action === 'get_account_info') {
+            // Remove the hidden class from the input and button
             document.getElementById('gai_account_id_input').classList.remove('hidden');
             document.getElementById('get_account_info_button').classList.remove('hidden');
             const getAccountInfoButton = document.getElementById('get_account_info_button');
             getAccountInfoButton.addEventListener('click', function() {
                 const accountId = document.getElementById('gai_account_id_input').value;
                 if (accountId) {
-                    // Enviar los datos al servidor WebSocket
+                    // Send the data to the WebSocket server
                     socket.send(JSON.stringify({
                         'action': 'get_account_info',
                         'account_id': accountId
@@ -33,6 +35,7 @@ function handleMenuClick(e) {
                 }
             });
         } else if (action === 'make_transaction') {
+            // Remove the hidden class from the input and button
             document.getElementById('mt_account_id_input').classList.remove('hidden');
             document.getElementById('mt_amount_input').classList.remove('hidden');
             document.getElementById('mt_destination_account_id_input').classList.remove('hidden');
@@ -43,7 +46,7 @@ function handleMenuClick(e) {
                 const amount = document.getElementById('mt_amount_input').value;
                 const destinationAccountId = document.getElementById('mt_destination_account_id_input').value;
                 if (accountId && amount && destinationAccountId) {
-                    // Enviar los datos al servidor WebSocket
+                    // Send the data to the WebSocket server
                     socket.send(JSON.stringify({
                         'action': 'make_transaction',
                         'account_id': accountId,
@@ -56,13 +59,14 @@ function handleMenuClick(e) {
             });
   
         } else if (action === 'show_transactions_list') {
+            // Remove the hidden class from the input and button
             document.getElementById('stl_account_id_input').classList.remove('hidden');
             document.getElementById('show_transactions_list_button').classList.remove('hidden');
             const showTransactionsListButton = document.getElementById('show_transactions_list_button');
             showTransactionsListButton.addEventListener('click', function() {
                 const accountId = document.getElementById('stl_account_id_input').value;
                 if (accountId) {
-                    // Enviar los datos al servidor WebSocket
+                    // Send the data to the WebSocket server
                     socket.send(JSON.stringify({
                         'action': 'show_transactions_list',
                         'account_id': accountId
@@ -75,56 +79,63 @@ function handleMenuClick(e) {
     }
 }
 
-async function getBankName(bankId) {
-    console.log("Getting bank name for bank ID:", bankId);
-    try {
-      const response = await fetch(`http://localhost:8000/bank/get/${bankId}`);
-      const bankData = await response.json();
-      return bankData.bank_name;
-    } catch (error) {
-      console.error('Error al obtener el nombre del banco:', error);
-      return 'N/A';
-    }
-}
-  
-
-async function handleServerResponse(data) {
-    console.log("Handling server response:", data);
-
+function handleServerResponse(data) {
+    // Handle the response from the server
     if (data.action === 'get_account_info') {
         const accountInfo = data.account_info;
-        console.log("BANCO: ", accountInfo.bank)
-        const bankName = await getBankName(accountInfo.bank);
         const formattedData = `
         <div class="message received">
             <p>Account Info:</p>
             <p>Account Number: ${accountInfo.account_number}</p>
             <p>Balance: ${accountInfo.balance.toFixed(2)}</p>
-            <p>Bank: ${bankName || 'N/A'}</p>
+            <p>Bank: ${accountInfo.bank || 'N/A'}</p>
         </div>
         `;
         document.getElementById('result-container').innerHTML = formattedData;
     } else if (data.action === 'make_transaction') {
-        document.getElementById('result-container').textContent = JSON.stringify(data.result);
+        const response = data.transaction_info;
+        const formattedData = `
+        <div class="message received">
+            <p>${response}</p>
+        </div>
+        `;
+        document.getElementById('result-container').innerHTML = formattedData;
     } else if (data.action === 'show_transactions_list') {
-        document.getElementById('result-container').textContent = JSON.stringify(data.result);
+        const transactionsList = data.transactions_list;
+        let formattedData = `
+        <div class="message received">
+            <p>Transaction List:</p>
+        `;
+        
+        for (let i = 0; i < transactionsList.length; i++) {
+        const transaction = transactionsList[i];
+        formattedData += `
+            <p>Amount: ${transaction.amount}</p>
+            <p>Date: ${transaction.date}</p>
+            <p>Status: ${transaction.status}</p>
+            <p>Source Account: ${transaction.source_account}</p>
+            <p>Destination Account: ${transaction.destination_account}</p>
+            <hr>
+        `;
+        }
+        
+        formattedData += '</div>';
+        document.getElementById('result-container').innerHTML = formattedData;
     }
 }
 
 socket.onmessage = function(event) {
     const data = JSON.parse(event.data);
     const messageSent = document.getElementById('message-sent');
-    console.log("HOLA DESDE EL ONMESSAGE")
+
     console.log("Data: ", data);
 
     if (data.type === 'chat') {
-        console.log("HOLA DESDE EL IF")
         messageSent.innerHTML += `
             <p>${data.message}</p>
         `;
 
     } else {
-        console.log("HOLA DESDE EL ELSE")
         handleServerResponse(data);
     }
 

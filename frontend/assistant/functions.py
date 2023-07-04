@@ -33,32 +33,47 @@ def select_balance(data):
     balance = data['balance']
     return balance
 
-def update_money(requests, source_account_id, destination_account_id, amount):
+def get_account(account_id):
+    '''
+    Function to get the data of an account
+    '''
+    url = f'http://localhost:8000/bank/get_account/{account_id}'
+    response = requests.get(url)
+    account = response.json()
+    return account
+
+def update_money(source_account_id, destination_account_id, amount):
     '''
     Function to update balance money between two accounts
     '''
     # Get the data of the source account
-    account_info = get_account_info.delay(source_account_id)
-    data = account_info.get()
+    account_info = get_account(source_account_id)
 
     # Select the balance of the source account
-    source_balance = select_balance(data)
+    source_balance = select_balance(account_info)
+
+    # Convert the amount to float
+    amount = float(amount)
 
     # Calculate the new balance of the source account
     new_source_balance = source_balance - amount
 
     # Update the balance of the source account
-    update_account_balance.delay(source_account_id, new_source_balance, data)
+    result_acc_src = update_account_balance.delay(source_account_id, new_source_balance, account_info)
 
     # Get the data of the destination account
-    account_info = get_account_info.delay(destination_account_id)
-    data = account_info.get()
+    account_info = get_account(destination_account_id)
 
     # Select the balance of the destination account
-    destination_balance = select_balance(requests, data)
+    destination_balance = select_balance(account_info)
 
     # Calculate the new balance of the destination account
     new_destination_balance = destination_balance + amount
 
     # Update the balance of the destination account
-    update_account_balance.delay(destination_account_id, new_destination_balance, data)
+    result_acc_des = update_account_balance.delay(destination_account_id, new_destination_balance, account_info)
+
+    if result_acc_src.get() and result_acc_des.get():
+        return True
+    else:
+        return False

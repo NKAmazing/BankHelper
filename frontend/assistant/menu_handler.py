@@ -2,6 +2,7 @@ from assistant.workers.tasks import get_account_info
 from assistant.workers.tasks import update_account_balance
 from assistant.workers.tasks import make_transaction
 from assistant.workers.tasks import show_transactions_list
+from assistant.functions import update_money
 import json
 
 # Class that handles the menu options
@@ -16,7 +17,6 @@ class MenuHandler:
             self.send_menu()
         elif action == 'get_account_info':
             result = self.handle_get_account_info(text_data_json)
-            print('ESTO ES RESULT EN HANDLE OPTIONS: ', result)
         elif action == 'make_transaction':
             result = self.handle_make_transaction(text_data_json)
         elif action == 'show_transactions_list':
@@ -42,11 +42,8 @@ class MenuHandler:
         Handle method for the management of the action of obtaining the account information
         '''
         account_id = data['account_id']
-        print('ESTO ES ACCOUNT ID: ', account_id)
-        print('TIPO DE DATO DE ACCOUNT ID: ', type(account_id))
         response = get_account_info.delay(account_id)
         result = response.get()
-        print('ESTO ES RESULT: ', result)
         response_data = {
             'action': 'get_account_info',
             'account_info': result
@@ -61,13 +58,36 @@ class MenuHandler:
         account_id = data['account_id']
         amount = data['amount']
         destination_account_id = data['destination_account_id']
-        response = make_transaction.delay(account_id, amount, destination_account_id)
-        result = response.get()
-        response_data = {
-            'action': 'make_transaction',
-            'transaction_info': result
-        }
-        return response_data
+
+        # Update the balance of the accounts
+        update_balance = update_money(account_id, destination_account_id, amount)
+
+        if update_balance == True:
+            # Call the task to make the transaction
+            response = make_transaction.delay(account_id, amount, destination_account_id)
+
+            # Get the response of the task
+            result = response.get()
+
+            if result:
+                # Set the response data to send to the frontend
+                response_data = {
+                    'action': 'make_transaction',
+                    'transaction_info': result
+                }
+                return response_data
+            else:
+                response_data = {
+                    'action': 'make_transaction',
+                    'transaction_info': 'Error making transaction'
+                }
+                return response_data
+        else:
+            response_data = {
+                'action': 'make_transaction',
+                'transaction_info': 'Error updating balance'
+            }
+            return response_data
 
     def handle_show_transactions_list(self, data):
         '''

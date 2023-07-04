@@ -49,8 +49,9 @@ def get_by_account_number(request, account_number):
 def update(request, id):
     account_number = request.data.get('account_number')
     balance = request.data.get('balance')
+    bank_id = request.data.get('bank_id')
     try:
-        account_service.update(id, account_number, balance)
+        account_service.update(id, account_number, balance, bank_id)
         return Response("Account updated successfully", status=status.HTTP_200_OK)
     except Exception as e:
         return Response(str(e), status=status.HTTP_400_BAD_REQUEST)

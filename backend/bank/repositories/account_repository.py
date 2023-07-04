@@ -41,7 +41,8 @@ class AccountRepository(Create, Read, Update, Delete):
         model = AccountModel(
             id = model.id,
             account_number = model.account_number,
-            balance = model.balance
+            balance = model.balance,
+            bank = model.bank
         )
         return model.save()
     

@@ -28,7 +28,6 @@ class ChatConsumer(WebsocketConsumer):
             action = text_data_json['action']
 
             result = self.__menu_handler.handle_options(action, text_data_json)
-            print('ESTO ES RESULT EN RECEIVE DE CONSUMERS: ', result)
 
             self.send(text_data=json.dumps(result))
         elif 'message' in text_data_json:

@@ -54,7 +54,7 @@ class AccountService(Service):
         '''
         return self.__repository.find_by_account_number(account_number)
     
-    def update(self, id, account_number, balance):
+    def update(self, id, account_number, balance, bank_id):
         '''
         Method to update a Account
         param:
@@ -63,10 +63,13 @@ class AccountService(Service):
             - balance: Balance of the Account
             - transactions: Transactions of the Account
         '''
+        bank = self.__bank_service.get_by_id(bank_id)
+
         model = AccountModel(
             id = id,
             account_number = account_number,
             balance = balance,
+            bank = bank
         )
 
         return self.__repository.update(model)
