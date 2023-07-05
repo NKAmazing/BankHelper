@@ -2,7 +2,7 @@
 
 ![Cover Bank Helper terminada](https://github.com/NKAmazing/BankHelper/assets/83615373/994244ea-7a2f-4785-8249-449a932fa864)
 
-#
+## Presentation
 
 Welcome to Bank Helper!
 
@@ -47,9 +47,8 @@ In addition, the functionality of a Django Backend with a REST API has been adde
 </div>
 
 
-#
+## Credits
 
-Credits:
 - Developer: [<i>Nicolas Mayoral</i>](https://github.com/NKAmazing)
 - Instructors: [<i>Diego Cordoba</i>](https://github.com/d1cor) - [<i>Gonzalo de la Vega</i>](https://github.com/gonzalo-delavega-um)
   
