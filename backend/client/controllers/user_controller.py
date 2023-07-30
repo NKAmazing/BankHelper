@@ -6,15 +6,20 @@ from ..serializers import UserSerializers
 
 user_service = UserService()
 
-# User controllers
-@api_view(['POST'])
-def create(request):
+# Auxiliary functions
+def get_data(request):
     username = request.data.get('username')
     email = request.data.get('email')
     password = request.data.get('password')
     address = request.data.get('address')
     phone = request.data.get('phone')
     account_id = request.data.get('account_id')
+    return username, email, password, address, phone, account_id
+
+# User controllers
+@api_view(['POST'])
+def create(request):
+    username, email, password, address, phone, account_id = get_data(request)
     try:
         user_service.add(username, email, password, address, phone, account_id)
         return Response("User created successfully", status=status.HTTP_201_CREATED)
@@ -59,12 +64,7 @@ def get_by_email(request, email):
     
 @api_view(['PUT'])
 def update(request, id):
-    username = request.data.get('username')
-    email = request.data.get('email')
-    password = request.data.get('password')
-    address = request.data.get('address')
-    phone = request.data.get('phone')
-    account_id = request.data.get('account_id')
+    username, email, password, address, phone, account_id = get_data(request)
     try:
         user_service.update(id, username, email, password, address, phone, account_id)
         return Response("User updated successfully", status=status.HTTP_200_OK)
@@ -78,4 +78,3 @@ def delete(request, id):
         return Response("User deleted successfully", status=status.HTTP_200_OK)
     except Exception as e:
         return Response(str(e), status=status.HTTP_404_NOT_FOUND)
-

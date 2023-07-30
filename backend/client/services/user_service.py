@@ -25,16 +25,8 @@ class UserService(Service):
             - phone: Phone of the User
             - account: Account of the User
         '''
-        account = self.__account_service.get_by_id(account_id)
+        model = self._set_user_credentials(None, username, email, password, address, phone, account_id)
 
-        model = UserModel(
-            username = username,
-            email = email,
-            password = password,
-            address = address,
-            phone = phone,
-            account = account
-        )
         return self.__repository.create(model)
     
     def get_all(self):
@@ -87,6 +79,29 @@ class UserService(Service):
             - phone: Phone of the User
             - account: Account of the User
         '''
+        model = self._set_user_credentials(id, username, email, password, address, phone, account_id)
+        return self.__repository.update(model)
+    
+    def delete(self, id):
+        '''
+        Method to delete a User
+        param:
+            - id: Id of the User
+        '''
+        return self.__repository.delete_by_id(id)
+    
+    def _set_user_credentials(self, id, username, email, password, address, phone, account_id):
+        '''
+        Method to set the credentials of a User
+        param:
+            - id: Id of the User
+            - username: Username of the User
+            - email: Email of the User
+            - password: Password of the User
+            - address: Address of the User
+            - phone: Phone of the User
+            - account: Account of the User
+        '''
         account = self.__account_service.get_by_id(account_id)
 
         model = UserModel(
@@ -98,12 +113,4 @@ class UserService(Service):
             phone = phone,
             account = account
         )
-        return self.__repository.update(model)
-    
-    def delete(self, id):
-        '''
-        Method to delete a User
-        param:
-            - id: Id of the User
-        '''
-        return self.__repository.delete_by_id(id)
+        return model

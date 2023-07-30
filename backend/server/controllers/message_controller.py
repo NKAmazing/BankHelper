@@ -7,13 +7,18 @@ from datetime import datetime
 
 message_service = MessageService()
 
-# Message controllers
-@api_view(['POST'])
-def create(request):
+# Auxiliary functions
+def get_data(request):
     content = request.data.get('content')
     date = datetime.now()
     user_id = request.data.get('user_id')
     chat_reference_id = request.data.get('chat_reference_id')
+    return content, date, user_id, chat_reference_id
+
+# Message controllers
+@api_view(['POST'])
+def create(request):
+    content, date, user_id, chat_reference_id = get_data(request)
     try:
         message_service.add(content, date, user_id, chat_reference_id)
         return Response("Message created successfully", status=status.HTTP_201_CREATED)
@@ -40,10 +45,7 @@ def get_by_id(request, id):
     
 @api_view(['PUT'])
 def update(request, id):
-    content = request.data.get('content')
-    date = datetime.now()
-    user_id = request.data.get('user_id')
-    chat_reference_id = request.data.get('chat_reference_id')
+    content, date, user_id, chat_reference_id = get_data(request)
     try:
         message_service.update(id, content, date, user_id, chat_reference_id)
         return Response("Message updated successfully", status=status.HTTP_200_OK)

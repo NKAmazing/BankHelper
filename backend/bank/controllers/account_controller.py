@@ -6,12 +6,17 @@ from ..serializers import AccountSerializer
 
 account_service = AccountService()
 
-# Account controllers
-@api_view(['POST'])
-def create(request):
+# Auxiliary functions
+def get_data(request):
     account_number = request.data.get('account_number')
     balance = request.data.get('balance')
     bank_id = request.data.get('bank_id')
+    return account_number, balance, bank_id
+
+# Account controllers
+@api_view(['POST'])
+def create(request):
+    account_number, balance, bank_id = get_data(request)
     try:
         account_service.add(account_number, balance, bank_id)
         return Response("Account created successfully", status=status.HTTP_201_CREATED)
@@ -47,9 +52,7 @@ def get_by_account_number(request, account_number):
     
 @api_view(['PUT'])
 def update(request, id):
-    account_number = request.data.get('account_number')
-    balance = request.data.get('balance')
-    bank_id = request.data.get('bank_id')
+    account_number, balance, bank_id = get_data(request)
     try:
         account_service.update(id, account_number, balance, bank_id)
         return Response("Account updated successfully", status=status.HTTP_200_OK)

@@ -20,13 +20,8 @@ class AccountRepository(Create, Read, Update, Delete):
         return self.__type_model
     
     def create(self, model):
-        model = AccountModel(
-            id = model.id,
-            account_number = model.account_number,
-            balance = model.balance,
-            bank = model.bank
-        )
-        return model.save()
+        account = self._set_account_model(model)
+        return account.save()
     
     def find_all(self):
         return AccountModel.objects.all()
@@ -38,16 +33,19 @@ class AccountRepository(Create, Read, Update, Delete):
         return AccountModel.objects.get(account_number=account_number)
     
     def update(self, model):
-        model = AccountModel(
-            id = model.id,
-            account_number = model.account_number,
-            balance = model.balance,
-            bank = model.bank
-        )
-        return model.save()
+        account = self._set_account_model(model)
+        return account.save()
     
     def delete(self, model):
         return model.delete()
     
     def delete_by_id(self, id):
         return AccountModel.objects.get(id=id).delete()
+    
+    def _set_account_model(self, model):
+        return AccountModel(
+            id = model.id,
+            account_number = model.account_number,
+            balance = model.balance,
+            bank = model.bank
+        )

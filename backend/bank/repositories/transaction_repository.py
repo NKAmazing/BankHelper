@@ -20,7 +20,7 @@ class TransactionRepository(Create, Read, Update, Delete):
         return self.__type_model
     
     def create(self, model):
-        transaction = self._create_transaction_from_model(model)
+        transaction = self._set_transaction_model(model)
         return transaction.save()
     
     def find_all(self):
@@ -48,7 +48,7 @@ class TransactionRepository(Create, Read, Update, Delete):
         return TransactionModel.objects.get(destination_account=destination_account)
     
     def update(self, model):
-        transaction = self._create_transaction_from_model(model)
+        transaction = self._set_transaction_model(model)
         return transaction.save()
     
     def delete(self, model):
@@ -57,7 +57,7 @@ class TransactionRepository(Create, Read, Update, Delete):
     def delete_by_id(self, id: int):
         return TransactionModel.objects.get(id=id).delete()
     
-    def _create_transaction_from_model(self, model):
+    def _set_transaction_model(self, model):
         return TransactionModel(
             id=model.id,
             amount=model.amount,

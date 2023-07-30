@@ -7,11 +7,16 @@ from datetime import datetime
 
 chat_service = ChatService()
 
+# Auxiliary functions
+def get_data(request):
+    chat_name = request.data.get('chat_name')
+    date = datetime.now()
+    return chat_name, date
+
 # Chat controllers
 @api_view(['POST'])
 def create(request):
-    chat_name = request.data.get('chat_name')
-    date = datetime.now()
+    chat_name, date = get_data(request)
     try:
         chat_service.add(chat_name, date)
         return Response("Chat created successfully", status=status.HTTP_201_CREATED)
@@ -38,8 +43,7 @@ def get_by_id(request, id):
     
 @api_view(['PUT'])
 def update(request, id):
-    chat_name = request.data.get('chat_name')
-    date = datetime.now()
+    chat_name, date = get_data(request)
     try:
         chat_service.update(id, chat_name, date)
         return Response("Chat updated successfully", status=status.HTTP_200_OK)

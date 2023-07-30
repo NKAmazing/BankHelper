@@ -6,11 +6,17 @@ from ..serializers import BankSerializer
 
 bank_service = BankService()
 
+# Auxiliary functions
+def get_data(request):
+    bank_name = request.data.get('bank_name')
+    bank_email = request.data.get('bank_email')
+    bank_accounts = request.data.get('bank_accounts')
+    return bank_name, bank_email, bank_accounts
+
 # Bank controllers
 @api_view(['POST'])
 def create(request):
-    bank_name = request.data.get('bank_name')
-    bank_email = request.data.get('bank_email')
+    bank_name, bank_email = get_data(request)
     try:
         bank_service.add(bank_name, bank_email)
         return Response("Bank created successfully", status=status.HTTP_201_CREATED)
@@ -37,9 +43,7 @@ def get_by_id(request, id):
     
 @api_view(['PUT'])
 def update(request, id):
-    bank_name = request.data.get('bank_name')
-    bank_email = request.data.get('bank_email')
-    bank_accounts = request.data.get('bank_accounts')
+    bank_name, bank_email, bank_accounts = get_data(request)
     try:
         bank_service.update(id, bank_name, bank_email, bank_accounts)
         return Response("Bank updated successfully", status=status.HTTP_200_OK)

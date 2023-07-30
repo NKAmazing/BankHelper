@@ -20,12 +20,8 @@ class ChatRepository(Create, Read, Update, Delete):
         return self.__type_model
     
     def create(self, model):
-        model = ChatModel(
-            id = model.id,
-            chat_name = model.chat_name,
-            date = model.date,
-        )
-        return model.save()
+        chat = self._set_chat_model(model)
+        return chat.save()
     
     def find_all(self):
         return ChatModel.objects.all()
@@ -37,22 +33,19 @@ class ChatRepository(Create, Read, Update, Delete):
         return ChatModel.objects.get(chat_name=chat_name)
     
     def update(self, model):
-        model = ChatModel(
-            id = model.id,
-            chat_name = model.chat_name,
-            date = model.date,
-            messages = model.messages
-        )
-        return model.save()
+        chat = self._set_chat_model(model)
+        return chat.save()
     
     def delete(self, model):
-        model = ChatModel(
-            id = model.id,
-            chat_name = model.chat_name,
-            date = model.date,
-            messages = model.messages
-        )
         return model.delete()
     
     def delete_by_id(self, id):
         return ChatModel.objects.get(id=id).delete()
+    
+    def _set_chat_model(self, model):
+        return ChatModel(
+            id=model.id,
+            chat_name=model.chat_name,
+            date=model.date,
+            messages=model.messages
+        )

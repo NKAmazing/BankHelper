@@ -25,15 +25,7 @@ class MessageService(Service):
             - user: User of the Message
             - chat_reference: Chat of the Message
         '''
-        user = self.__user_service.get_by_id(user_id)
-        chat_reference = self.__chat_service.get_by_id(chat_reference_id)
-
-        model = MessageModel(
-            content = content,
-            date = date,
-            user = user,
-            chat_reference = chat_reference
-        )
+        model = self._set_message_credentials(None, content, date, user_id, chat_reference_id)
         return self.__repository.create(model)
     
     def get_all(self):
@@ -84,16 +76,7 @@ class MessageService(Service):
             - user: User of the Message
             - chat_reference: Chat of the Message
         '''
-        user = self.__user_service.get_by_id(user_id)
-        chat_reference = self.__chat_service.get_by_id(chat_reference_id)
-
-        model = MessageModel(
-            id = id,
-            content = content,
-            date = date,
-            user = user,
-            chat_reference = chat_reference
-        )
+        model = self._set_message_credentials(id, content, date, user_id, chat_reference_id)
         return self.__repository.update(model)
     
     def delete(self, id):
@@ -103,3 +86,33 @@ class MessageService(Service):
             - id: Id of the Message
         '''
         return self.__repository.delete_by_id(id)
+    
+    def _set_message_credentials(self, id, content, date, user_id, chat_reference_id):
+        '''
+        Method to set the credentials of a Message
+        param:
+            - id: Id of the Message
+            - content: Content of the Message
+            - date: Date of the Message
+            - user: User of the Message
+            - chat_reference: Chat of the Message
+        '''
+        user = self.__user_service.get_by_id(user_id)
+        chat_reference = self.__chat_service.get_by_id(chat_reference_id)
+
+        if id is not None:
+            model = MessageModel(
+                id = id,
+                content = content,
+                date = date,
+                user = user,
+                chat_reference = chat_reference
+            )
+        else:
+            model = MessageModel(
+                content = content,
+                date = date,
+                user = user,
+                chat_reference = chat_reference
+            )
+        return model

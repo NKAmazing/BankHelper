@@ -7,7 +7,7 @@ from datetime import datetime
 
 transaction_service = TransactionService()
 
-# Auxiliary function
+# Auxiliary functions
 def get_data(request):
     amount = request.data.get('amount')
     date = datetime.now()

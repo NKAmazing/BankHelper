@@ -20,14 +20,8 @@ class MessageRepository(Create, Read, Update, Delete):
         return self.__type_model
     
     def create(self, model):
-        model = MessageModel(
-            id = model.id,
-            content = model.content,
-            date = model.date,
-            user = model.user,
-            chat_reference = model.chat_reference
-        )
-        return model.save()
+        message = self._set_message_model(model)
+        return message.save()
     
     def find_all(self):
         return MessageModel.objects.all()
@@ -45,24 +39,20 @@ class MessageRepository(Create, Read, Update, Delete):
         return MessageModel.objects.get(chat_reference=chat_reference)
     
     def update(self, model):
-        model = MessageModel(
-            id = model.id,
-            content = model.content,
-            date = model.date,
-            user = model.user,
-            chat_reference = model.chat_reference
-        )
-        return model.save()
+        message = self._set_message_model(model)
+        return message.save()
     
     def delete(self, model):
-        model = MessageModel(
-            id = model.id,
-            content = model.content,
-            date = model.date,
-            user = model.user,
-            chat_reference = model.chat_reference
-        )
         return model.delete()
     
     def delete_by_id(self, id):
         return MessageModel.objects.get(id=id).delete()
+    
+    def _set_message_model(self, model):
+        return MessageModel(
+            id=model.id,
+            content=model.content,
+            date=model.date,
+            user=model.user,
+            chat_reference=model.chat_reference
+        )

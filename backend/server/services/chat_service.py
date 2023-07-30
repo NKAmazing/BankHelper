@@ -20,10 +20,7 @@ class ChatService(Service):
             - date: Date of the Chat
             - messages: Messages of the Chat
         '''
-        model = ChatModel(
-            chat_name = chat_name,
-            date = date
-        )
+        model = self._set_chat_credentials(None, chat_name, date)
         return self.__repository.create(model)
     
     def get_all(self):
@@ -57,11 +54,8 @@ class ChatService(Service):
             - date: Date of the Chat
             - messages: Messages of the Chat
         '''
-        model = ChatModel(
-            chat_name = chat_name,
-            date = date
-        )
-        return self.__repository.update(id, model)
+        model = self._set_chat_credentials(id, chat_name, date)
+        return self.__repository.update(model)
     
     def delete(self, id):
         '''
@@ -70,3 +64,17 @@ class ChatService(Service):
             - id: Id of the Chat
         '''
         return self.__repository.delete_by_id(id)
+
+    def _set_chat_credentials(self, id, chat_name, date):
+        if id is not None:
+            model = ChatModel(
+                id = id,
+                chat_name = chat_name,
+                date = date
+            )
+        else:
+            model = ChatModel(
+                chat_name = chat_name,
+                date = date
+            )
+        return model
