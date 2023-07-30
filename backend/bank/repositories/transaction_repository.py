@@ -20,15 +20,8 @@ class TransactionRepository(Create, Read, Update, Delete):
         return self.__type_model
     
     def create(self, model):
-        model = TransactionModel(
-            id = model.id,
-            amount = model.amount,
-            date = model.date,
-            status = model.status,
-            source_account = model.source_account,
-            destination_account = model.destination_account
-        )
-        return model.save()
+        transaction = self._create_transaction_from_model(model)
+        return transaction.save()
     
     def find_all(self):
         return TransactionModel.objects.all()
@@ -55,18 +48,21 @@ class TransactionRepository(Create, Read, Update, Delete):
         return TransactionModel.objects.get(destination_account=destination_account)
     
     def update(self, model):
-        model = TransactionModel(
-            id = model.id,
-            amount = model.amount,
-            date = model.date,
-            status = model.status,
-            source_account = model.source_account,
-            destination_account = model.destination_account
-        )
-        return model.save()
+        transaction = self._create_transaction_from_model(model)
+        return transaction.save()
     
     def delete(self, model):
         return model.delete()
     
     def delete_by_id(self, id: int):
         return TransactionModel.objects.get(id=id).delete()
+    
+    def _create_transaction_from_model(self, model):
+        return TransactionModel(
+            id=model.id,
+            amount=model.amount,
+            date=model.date,
+            status=model.status,
+            source_account=model.source_account,
+            destination_account=model.destination_account
+        )

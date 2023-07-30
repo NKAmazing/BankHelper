@@ -7,14 +7,19 @@ from datetime import datetime
 
 transaction_service = TransactionService()
 
-# Transaction controllers
-@api_view(['POST'])
-def create(request):
+# Auxiliary function
+def get_data(request):
     amount = request.data.get('amount')
     date = datetime.now()
     status_transaction = request.data.get('status')
     source_account = request.data.get('source_account')
     destination_account = request.data.get('destination_account')
+    return amount, date, status_transaction, source_account, destination_account
+
+# Transaction controllers
+@api_view(['POST'])
+def create(request):
+    amount, date, status_transaction, source_account, destination_account = get_data(request)
     try:
         transaction_service.add(amount, date, status_transaction, source_account, destination_account)
         return Response("Transaction created successfully", status=status.HTTP_201_CREATED)
@@ -50,11 +55,7 @@ def get_all_by_source_account(request, source_account):
     
 @api_view(['PUT'])
 def update(request, id):
-    amount = request.data.get('amount')
-    date = datetime.now()
-    status_transaction = request.data.get('status')
-    source_account = request.data.get('source_account')
-    destination_account = request.data.get('destination_account')
+    amount, date, status_transaction, source_account, destination_account = get_data(request)
     try:
         transaction_service.update(id, amount, date, status_transaction, source_account, destination_account)
         return Response("Transaction updated successfully", status=status.HTTP_200_OK)
