@@ -51,7 +51,7 @@ def delete(request, id):
         return Response("Bank deleted successfully", status=status.HTTP_200_OK)
     except Exception as e:
         return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
-    
+
 # Auxiliary functions
 
 def get_data(request):

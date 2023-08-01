@@ -69,7 +69,7 @@ def delete(request, id):
         return Response("User deleted successfully", status=status.HTTP_200_OK)
     except Exception as e:
         return Response(str(e), status=status.HTTP_404_NOT_FOUND)
-    
+
 # Auxiliary functions
 
 def get_data(request):

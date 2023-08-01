@@ -1,103 +1,27 @@
-from assistant.workers.tasks import get_account_info
-from assistant.workers.tasks import update_account_balance
-from assistant.workers.tasks import make_transaction
-from assistant.workers.tasks import show_transactions_list
-from assistant.functions import update_money
-import json
-
-# Class that handles the menu options
+from .commands.get_account_info_command import GetAccountInfoCommand
+from .commands.make_transaction_command import MakeTransactionCommand
+from .commands.show_transactions_list_command import ShowTransactionsListCommand
 
 class MenuHandler:
+    '''
+    Class to handle the menu options the user can choose from the frontend
+    '''
+    def __init__(self):
+        self.commands = {
+            'get_account_info': GetAccountInfoCommand,
+            'make_transaction': MakeTransactionCommand,
+            'show_transactions_list': ShowTransactionsListCommand,
+        }
 
     def handle_options(self, action, text_data_json):
         '''
         Handle method for the management of the menu options
         '''
-        if action == 'send_menu':
-            self.send_menu()
-        elif action == 'get_account_info':
-            result = self.handle_get_account_info(text_data_json)
-        elif action == 'make_transaction':
-            result = self.handle_make_transaction(text_data_json)
-        elif action == 'show_transactions_list':
-            result = self.handle_show_transactions_list(text_data_json)
+        if action in self.commands:
+            command_class = self.commands[action]
+            command_instance = command_class(data=text_data_json)
+            result = command_instance.execute()
         else:
             print('Error: Action does not exist')
             result = {'error': 'Action does not exist'}
         return result
-
-    def send_menu(self):
-        menu = {
-            'action': 'send_menu',
-            'options': [
-                {'label': 'Show information account', 'value': 'get_account_info'},
-                {'label': 'Make a transaction', 'value': 'make_transaction'},
-                {'label': 'Show transaction history', 'value': 'show_transactions_list'}
-            ]
-        }
-        self.send(text_data=json.dumps(menu))
-
-    def handle_get_account_info(self, data):
-        '''
-        Handle method for the management of the action of obtaining the account information
-        '''
-        account_id = data['account_id']
-        response = get_account_info.delay(account_id)
-        result = response.get()
-        response_data = {
-            'action': 'get_account_info',
-            'account_info': result
-        }
-        return response_data
-        
-
-    def handle_make_transaction(self, data):
-        '''
-        Handle method for the management of the action of making a transaction
-        '''
-        account_id = data['account_id']
-        amount = data['amount']
-        destination_account_id = data['destination_account_id']
-
-        # Update the balance of the accounts
-        update_balance = update_money(account_id, destination_account_id, amount)
-
-        if update_balance == True:
-            # Call the task to make the transaction
-            response = make_transaction.delay(account_id, amount, destination_account_id)
-
-            # Get the response of the task
-            result = response.get()
-
-            if result:
-                # Set the response data to send to the frontend
-                response_data = {
-                    'action': 'make_transaction',
-                    'transaction_info': result
-                }
-                return response_data
-            else:
-                response_data = {
-                    'action': 'make_transaction',
-                    'transaction_info': 'Error making transaction'
-                }
-                return response_data
-        else:
-            response_data = {
-                'action': 'make_transaction',
-                'transaction_info': 'Error updating balance'
-            }
-            return response_data
-
-    def handle_show_transactions_list(self, data):
-        '''
-        Handle method for the management of the action of showing the transaction history
-        '''
-        account_id = data['account_id']
-        response = show_transactions_list.delay(account_id)
-        result = response.get()
-        response_data = {
-            'action': 'show_transactions_list',
-            'transactions_list': result
-        }
-        return response_data
