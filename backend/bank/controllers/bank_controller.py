@@ -6,14 +6,8 @@ from ..serializers import BankSerializer
 
 bank_service = BankService()
 
-# Auxiliary functions
-def get_data(request):
-    bank_name = request.data.get('bank_name')
-    bank_email = request.data.get('bank_email')
-    bank_accounts = request.data.get('bank_accounts')
-    return bank_name, bank_email, bank_accounts
-
 # Bank controllers
+
 @api_view(['POST'])
 def create(request):
     bank_name, bank_email = get_data(request)
@@ -57,3 +51,11 @@ def delete(request, id):
         return Response("Bank deleted successfully", status=status.HTTP_200_OK)
     except Exception as e:
         return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
+    
+# Auxiliary functions
+
+def get_data(request):
+    bank_name = request.data.get('bank_name')
+    bank_email = request.data.get('bank_email')
+    bank_accounts = request.data.get('bank_accounts')
+    return bank_name, bank_email, bank_accounts

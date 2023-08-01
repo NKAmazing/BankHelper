@@ -6,14 +6,8 @@ from ..serializers import AccountSerializer
 
 account_service = AccountService()
 
-# Auxiliary functions
-def get_data(request):
-    account_number = request.data.get('account_number')
-    balance = request.data.get('balance')
-    bank_id = request.data.get('bank_id')
-    return account_number, balance, bank_id
-
 # Account controllers
+
 @api_view(['POST'])
 def create(request):
     account_number, balance, bank_id = get_data(request)
@@ -66,3 +60,11 @@ def delete(request, id):
         return Response("Account deleted successfully", status=status.HTTP_200_OK)
     except Exception as e:
         return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
+
+# Auxiliary functions
+
+def get_data(request):
+    account_number = request.data.get('account_number')
+    balance = request.data.get('balance')
+    bank_id = request.data.get('bank_id')
+    return account_number, balance, bank_id

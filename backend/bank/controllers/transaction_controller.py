@@ -7,16 +7,8 @@ from datetime import datetime
 
 transaction_service = TransactionService()
 
-# Auxiliary functions
-def get_data(request):
-    amount = request.data.get('amount')
-    date = datetime.now()
-    status_transaction = request.data.get('status')
-    source_account = request.data.get('source_account')
-    destination_account = request.data.get('destination_account')
-    return amount, date, status_transaction, source_account, destination_account
-
 # Transaction controllers
+
 @api_view(['POST'])
 def create(request):
     amount, date, status_transaction, source_account, destination_account = get_data(request)
@@ -69,3 +61,13 @@ def delete(request, id):
         return Response("Transaction deleted successfully", status=status.HTTP_200_OK)
     except Exception as e:
         return Response(str(e), status=status.HTTP_404_NOT_FOUND)
+    
+# Auxiliary functions
+
+def get_data(request):
+    amount = request.data.get('amount')
+    date = datetime.now()
+    status_transaction = request.data.get('status')
+    source_account = request.data.get('source_account')
+    destination_account = request.data.get('destination_account')
+    return amount, date, status_transaction, source_account, destination_account

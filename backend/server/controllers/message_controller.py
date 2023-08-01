@@ -7,15 +7,8 @@ from datetime import datetime
 
 message_service = MessageService()
 
-# Auxiliary functions
-def get_data(request):
-    content = request.data.get('content')
-    date = datetime.now()
-    user_id = request.data.get('user_id')
-    chat_reference_id = request.data.get('chat_reference_id')
-    return content, date, user_id, chat_reference_id
-
 # Message controllers
+
 @api_view(['POST'])
 def create(request):
     content, date, user_id, chat_reference_id = get_data(request)
@@ -59,3 +52,12 @@ def delete(request, id):
         return Response("Message deleted successfully", status=status.HTTP_200_OK)
     except Exception as e:
         return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
+
+# Auxiliary functions
+
+def get_data(request):
+    content = request.data.get('content')
+    date = datetime.now()
+    user_id = request.data.get('user_id')
+    chat_reference_id = request.data.get('chat_reference_id')
+    return content, date, user_id, chat_reference_id

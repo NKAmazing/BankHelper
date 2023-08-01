@@ -7,13 +7,8 @@ from datetime import datetime
 
 chat_service = ChatService()
 
-# Auxiliary functions
-def get_data(request):
-    chat_name = request.data.get('chat_name')
-    date = datetime.now()
-    return chat_name, date
-
 # Chat controllers
+
 @api_view(['POST'])
 def create(request):
     chat_name, date = get_data(request)
@@ -57,3 +52,10 @@ def delete(request, id):
         return Response("Chat deleted successfully", status=status.HTTP_200_OK)
     except Exception as e:
         return Response(str(e), status=status.HTTP_400_BAD_REQUEST) 
+
+# Auxiliary functions
+
+def get_data(request):
+    chat_name = request.data.get('chat_name')
+    date = datetime.now()
+    return chat_name, date
