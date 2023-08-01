@@ -44,12 +44,11 @@ class BankRepository(Create, Read, Update, Delete):
             id = model.id,
             bank_name = model.bank_name,
             bank_email = model.bank_email,
-            bank_accounts = model.bank_accounts
         )
         return model.save()
     
     def delete(self, model):
         return model.delete()
     
-    def delete_by_id(self, id: int):
+    def delete_by_id(self, id):
         return BankModel.objects.get(id=id).delete()

@@ -37,9 +37,9 @@ def get_by_id(request, id):
     
 @api_view(['PUT'])
 def update(request, id):
-    bank_name, bank_email, bank_accounts = get_data(request)
+    bank_name, bank_email = get_data(request)
     try:
-        bank_service.update(id, bank_name, bank_email, bank_accounts)
+        bank_service.update(id, bank_name, bank_email)
         return Response("Bank updated successfully", status=status.HTTP_200_OK)
     except Exception as e:
         return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
@@ -57,5 +57,4 @@ def delete(request, id):
 def get_data(request):
     bank_name = request.data.get('bank_name')
     bank_email = request.data.get('bank_email')
-    bank_accounts = request.data.get('bank_accounts')
-    return bank_name, bank_email, bank_accounts
+    return bank_name, bank_email
