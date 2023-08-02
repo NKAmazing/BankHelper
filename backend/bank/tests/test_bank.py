@@ -2,6 +2,7 @@ from django.test import TestCase
 from rest_framework import status
 from rest_framework.test import APIClient
 from ..services.bank_service import BankService
+from .constants import *
 
 class BankControllerTests(TestCase):
     def setUp(self):
@@ -17,15 +18,15 @@ class BankControllerTests(TestCase):
         '''
         # Create a bank to be used in the account
         bank_service = BankService()
-        bank_service.add('Test Bank', 'test@test.com')
+        bank_service.add(BANK['BANK_NAME'], BANK['BANK_EMAIL'])
 
     def test_create_bank(self):
         '''
-        Method to test the creation of a bank
+        Method to test a request to create a bank
         '''
         data = {
-            'bank_name': 'Test Bank',
-            'bank_email': 'test@test.com',
+            'bank_name': BANK['BANK_NAME'],
+            'bank_email': BANK['BANK_EMAIL'],
         }
         response = self.client.post('/bank/create/', data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -51,8 +52,8 @@ class BankControllerTests(TestCase):
         Method to test a request to update a bank
         '''
         data = {
-            'bank_name': 'Updated Bank',
-            'bank_email': 'updated@test.com',
+            'bank_name': BANK['BANK_NAME_UPDATED'],
+            'bank_email': BANK['BANK_EMAIL_UPDATED'],
         }
         response = self.client.put('/bank/update/1/', data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)

@@ -3,6 +3,7 @@ from rest_framework import status
 from rest_framework.test import APIClient
 from ..services.account_service import AccountService
 from ..services.bank_service import BankService
+from .constants import *
 
 class AccountControllerTests(TestCase):
     def setUp(self):
@@ -18,20 +19,20 @@ class AccountControllerTests(TestCase):
         '''
         # Create a bank to be used in the account
         bank_service = BankService()
-        bank_service.add('Test Bank', 'test@test.com')
+        bank_service.add(BANK['BANK_NAME'], BANK['BANK_EMAIL'])
 
         # Create an account to be used in the tests
         account_service = AccountService()
-        account_service.add('00000000', 1000.00, 1)
+        account_service.add(ACCOUNT['ACCOUNT_NUMBER'], ACCOUNT['BALANCE'], ACCOUNT['BANK_ID'])
 
     def test_create_account(self):
         '''
-        Method to test the creation of an account
+        Method to test a request to create an account
         '''
         data = {
-            'account_number': '00000000',
-            'balance': 1000.00,
-            'bank_id': 1,
+            'account_number': ACCOUNT['ACCOUNT_NUMBER'],
+            'balance': ACCOUNT['BALANCE'],
+            'bank_id': ACCOUNT['BANK_ID'],
         }
         response = self.client.post('/bank/create_account/', data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -57,9 +58,9 @@ class AccountControllerTests(TestCase):
         Method to test a request to update an account
         '''
         data = {
-            'account_number': '00000000',
-            'balance': 1000.00,
-            'bank_id': 1,
+            'account_number': ACCOUNT['ACCOUNT_NUMBER'],
+            'balance': ACCOUNT['BALANCE_UPDATED'],
+            'bank_id': ACCOUNT['BANK_ID'],
         }
         response = self.client.put('/bank/update_account/1/', data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
