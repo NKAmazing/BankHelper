@@ -1,19 +1,23 @@
 from django.test import TestCase
 from rest_framework import status
 from rest_framework.test import APIClient
-from ..models import Bank
+from ..services.bank_service import BankService
 
 class BankControllerTests(TestCase):
     def setUp(self):
         '''
-        Set up method to create a test client to make HTTP requests
+        Set up method to establish instances used in the tests
         '''
         self.client = APIClient()
 
     @classmethod
     def setUpTestData(cls):
-        # Crea un banco de prueba con id=1 para usarlo en las pruebas
-        Bank.objects.create(id=1, bank_name='Test Bank', bank_email='test@test.com')
+        '''
+        Method to set up data to be used in the tests
+        '''
+        # Create a bank to be used in the account
+        bank_service = BankService()
+        bank_service.add('Test Bank', 'test@test.com')
 
     def test_create_bank(self):
         '''
