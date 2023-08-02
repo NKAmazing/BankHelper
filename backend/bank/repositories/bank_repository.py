@@ -20,12 +20,8 @@ class BankRepository(Create, Read, Update, Delete):
         return self.__type_model
     
     def create(self, model):
-        model = BankModel(
-            id = model.id,
-            bank_name = model.bank_name,
-            bank_email = model.bank_email,
-        )
-        return model.save()
+        bank = self._set_bank_model(model)
+        return bank.save()
     
     def find_all(self):
         return BankModel.objects.all()
@@ -40,15 +36,18 @@ class BankRepository(Create, Read, Update, Delete):
         return BankModel.objects.get(bank_email=bank_email)
     
     def update(self, model):
-        model = BankModel(
-            id = model.id,
-            bank_name = model.bank_name,
-            bank_email = model.bank_email,
-        )
-        return model.save()
+        bank = self._set_bank_model(model)
+        return bank.save()
     
     def delete(self, model):
         return model.delete()
     
     def delete_by_id(self, id):
         return BankModel.objects.get(id=id).delete()
+    
+    def _set_bank_model(self, model):
+        return BankModel(
+            id = model.id,
+            bank_name = model.bank_name,
+            bank_email = model.bank_email,
+        )
