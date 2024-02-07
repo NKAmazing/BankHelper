@@ -1,4 +1,4 @@
-Django==3.2.12
+Django==3.2.24
 python-decouple==3.4
 channels==3.0.4
 channels-redis==3.3.1
